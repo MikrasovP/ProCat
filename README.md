@@ -11,4 +11,5 @@ s4kh4rov | Александр Сахаров | Backend Java Dev
 yanshinaann | Анна Яньшина | BA, QA
 
 # Ссылки
-[Доска на Trello](https://miro.com/app/board/o9J_lQqU-8w=/)
+[Ссылка на Miro](https://miro.com/app/board/o9J_lQqU-8w=/)
+[Доска на Trello](https://trello.com/b/x19zfnxE/procat)
