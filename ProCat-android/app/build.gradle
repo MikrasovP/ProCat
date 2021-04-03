@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -78,6 +80,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -95,8 +102,19 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.10'
 
     // Dagger
-    implementation 'com.google.dagger:dagger:2.30.1'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.30.1'
+    ext.dagger_version = '2.33'
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    ext.hilt_vm_version = '1.0.0-alpha03'
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_vm_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_vm_version"
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 

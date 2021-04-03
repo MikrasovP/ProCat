@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -50,8 +51,13 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.10'
 
     // Dagger
-    implementation 'com.google.dagger:dagger:2.30.1'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.30.1'
+    ext.dagger_version = '2.33'
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
