@@ -1,9 +1,10 @@
-package vsu.csf.procat
+package vsu.csf.procat.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
-import vsu.csf.procat.ui.RentStationsListActivity
+import vsu.csf.procat.R
+import vsu.csf.procat.ui.rentstationslist.RentStationsListActivity
 
 class LauncherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

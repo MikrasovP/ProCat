@@ -19,6 +19,7 @@
             android:id="@+id/rent_stations_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:menu="@menu/menu_profile_toolbar"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/Theme.ProCat.PopupOverlay"
             app:theme="@style/Theme.ProCat.AppBarOverlay" />

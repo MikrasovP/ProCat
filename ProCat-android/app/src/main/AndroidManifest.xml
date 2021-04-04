@@ -11,15 +11,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProCat">
         <activity
-            android:name=".LauncherActivity"
-            android:noHistory="true">
+            android:name=".ui.LauncherActivity"
+            android:noHistory="true"
+            android:theme="@style/noAnimTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RentStationsListActivity" />
+        <activity android:name=".ui.rentstationslist.RentStationsListActivity" />
+        <activity android:name=".ui.ProfileActivity" />
     </application>
 
 </manifest>
