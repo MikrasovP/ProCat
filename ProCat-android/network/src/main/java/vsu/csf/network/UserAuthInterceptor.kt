@@ -18,7 +18,7 @@ class UserAuthInterceptor @Inject constructor(
         val builder: Request.Builder = request.newBuilder()
         val token = authHolder.getToken()
 
-        // Добавляем auth token, если он есть
+        // Add auth token if we have one
         if (token.isNotBlank())
             builder.header(AUTH_TOKEN_HEADER_NAME, token)
 

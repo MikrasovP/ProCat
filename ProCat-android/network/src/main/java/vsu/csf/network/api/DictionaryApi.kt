@@ -1,5 +1,6 @@
 package vsu.csf.network.api
 
+
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import vsu.csf.network.model.dictionary.AvailabilityStatusModel

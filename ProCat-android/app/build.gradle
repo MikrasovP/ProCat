@@ -44,6 +44,8 @@ android {
         debug {
             signingConfig signingConfigs.debug
 
+            buildConfigField "String", "SERVER_URL", "\"http://www.test.ru\""
+
             debuggable true
             minifyEnabled false
         }
@@ -51,25 +53,10 @@ android {
         release {
             signingConfig signingConfigs.release
 
+            buildConfigField "String", "SERVER_URL", "\"https://www.test.ru\""
+
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    flavorDimensions "appId"
-
-    productFlavors {
-        def APP_ID_DEV = "vsu.csf.procat.dev"
-        def APP_ID_PROD = "vsu.csf.procat"
-
-        Dev {
-            applicationId APP_ID_DEV
-            dimension "appId"
-        }
-
-        Prod {
-            applicationId APP_ID_PROD
-            dimension "appId"
         }
     }
 
@@ -87,6 +74,8 @@ android {
 }
 
 dependencies {
+
+    implementation project(':network')
 
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -120,6 +109,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
+
+    // Room:
+    ext.room_version = "2.3.0-rc01"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "io.mockk:mockk:1.10.4"
