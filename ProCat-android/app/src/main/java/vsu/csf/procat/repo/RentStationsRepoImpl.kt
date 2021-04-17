@@ -3,7 +3,6 @@ package vsu.csf.procat.repo
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import vsu.csf.network.api.RentStationApi
-import vsu.csf.network.model.RentStationModel
 import vsu.csf.procat.model.RentStation
 import vsu.csf.procat.model.toDto
 import javax.inject.Inject

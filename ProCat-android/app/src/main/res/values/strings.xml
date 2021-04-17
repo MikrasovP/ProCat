@@ -2,4 +2,6 @@
     <string name="app_name">ProCat</string>
 
     <string name="toolbar_profile_action">Профиль</string>
+
+    <string name="update_error">При обновлении данных произошла ошибка</string>
 </resources>
