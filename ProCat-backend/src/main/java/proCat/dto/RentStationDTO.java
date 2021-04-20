@@ -1,6 +1,6 @@
 package proCat.dto;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
 public class RentStationDTO {

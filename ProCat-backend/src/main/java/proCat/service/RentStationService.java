@@ -15,7 +15,8 @@ public class RentStationService {
     public RentStationService(RentStationRepository stationRepository) {
         this.stationRepository = stationRepository;
     }
-    public List<RentStation> findAll(){
+
+    public List<RentStation> findAll() {
         return stationRepository.findAll();
     }
 }
