@@ -2,6 +2,8 @@ package vsu.csf.network
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+@InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
     companion object {
@@ -18,7 +21,7 @@ class NetworkModule {
         @Provides
         fun provideRetrofit(
             httpClient: OkHttpClient,
-        ) = Retrofit.Builder()
+        ): Retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.SERVER_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
@@ -29,7 +32,7 @@ class NetworkModule {
         @Provides
         fun provideHttpClient(
             loggingInterceptor: HttpLoggingInterceptor,
-            authInterceptor: UserAuthInterceptor
+            authInterceptor: UserAuthInterceptor,
         ) = OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -40,11 +43,12 @@ class NetworkModule {
 
         @Singleton
         @Provides
-        fun provideLoggingInterceptor() = HttpLoggingInterceptor()
+        fun provideLoggingInterceptor(): HttpLoggingInterceptor =
+            HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
         @Singleton
         @Provides
-        fun provideAuthInterceptor() = UserAuthInterceptor()
+        fun provideAuthInterceptor(authHolder: AuthHolder) = UserAuthInterceptor(authHolder)
 
     }
 }
