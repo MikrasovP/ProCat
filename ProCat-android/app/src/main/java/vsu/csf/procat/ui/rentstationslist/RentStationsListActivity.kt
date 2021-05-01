@@ -27,17 +27,22 @@ class RentStationsListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_rent_stations_list)
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
         binding.rentStationsRv.adapter = adapter
 
         observeViewModel()
 
         setSupportActionBar(binding.rentStationsToolbar)
+
+        viewModel.updateData()
     }
 
-    private fun observeViewModel(){
+    private fun observeViewModel() {
         viewModel.rentStations.observe(this, { adapter.setItems(it) })
-        viewModel.networkError.observe(this, {
-            Toast.makeText(this, getString(R.string.update_error), Toast.LENGTH_LONG).show()
+        viewModel.networkError.observe(this, { isError ->
+            if (isError)
+                Toast.makeText(this, getString(R.string.update_error), Toast.LENGTH_LONG).show()
         })
     }
 

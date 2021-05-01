@@ -18,11 +18,12 @@ class DictionariesRepoImpl @Inject constructor(
 ) : DictionariesRepo {
 
     override fun updateAllDictionaries(): Completable =
-        Completable.mergeArray(
+        Completable.complete()
+        /*Completable.mergeArray(
             updateAvailabilityStatuses(),
             updateInventoryTypes(),
             updateRentStatuses(),
-        ).subscribeOn(Schedulers.io())
+        ).subscribeOn(Schedulers.io())*/
 
     private fun updateAvailabilityStatuses(): Completable =
         dictionaryApi.getAvailabilityStatuses()

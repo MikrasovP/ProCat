@@ -3,9 +3,9 @@ package vsu.csf.network.model
 import com.google.gson.annotations.SerializedName
 
 data class RentStationModel(
-    @SerializedName("id")
+    @SerializedName("stationId")
     val id: Long,
-    @SerializedName("name")
+    @SerializedName("stationName")
     val name: String,
     @SerializedName("address")
     val address: String,

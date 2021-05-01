@@ -13,12 +13,16 @@
         <variable
             name="vm"
             type="vsu.csf.procat.ui.rentstationslist.RentStationViewModel" />
+
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:onClick="@{clickListener}"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="12dp"

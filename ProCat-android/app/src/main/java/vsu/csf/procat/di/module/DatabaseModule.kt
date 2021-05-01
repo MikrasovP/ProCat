@@ -23,10 +23,12 @@ abstract class DatabaseModule {
         @Provides
         fun provideAvailabilityStatusDao(database: ProCatDatabase): AvailabilityStatusDao =
             database.availabilityStatusDao()
+
         @Singleton
         @Provides
         fun provideInventoryTypeDao(database: ProCatDatabase): InventoryTypeDao =
             database.inventoryTypeDao()
+
         @Singleton
         @Provides
         fun provideRentStatusDao(database: ProCatDatabase): RentStatusDao =

@@ -43,7 +43,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
 
-            buildConfigField "String", "SERVER_URL", "\"http://www.test.ru\""
+            buildConfigField "String", "SERVER_URL", "\"http://procat-app.herokuapp.com/\""
 
             debuggable true
             minifyEnabled false
@@ -52,7 +52,7 @@ android {
         release {
             signingConfig signingConfigs.release
 
-            buildConfigField "String", "SERVER_URL", "\"https://www.test.ru\""
+            buildConfigField "String", "SERVER_URL", "\"http://procat-app.herokuapp.com/\""
 
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

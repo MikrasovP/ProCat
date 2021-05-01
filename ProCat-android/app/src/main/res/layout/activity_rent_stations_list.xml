@@ -30,7 +30,7 @@
             android:id="@+id/rent_stations_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:refreshing="@{vm.isLoadingFromServer}"
+            app:refreshing="@{vm.isLoadingFromServer()}"
             app:onRefreshListener="@{() -> vm.updateData()}"
             app:layout_constraintTop_toBottomOf="@id/rent_stations_toolbar"
             app:layout_constraintBottom_toBottomOf="parent">

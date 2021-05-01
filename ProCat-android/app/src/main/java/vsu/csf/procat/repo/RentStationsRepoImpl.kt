@@ -14,12 +14,12 @@ class RentStationsRepoImpl @Inject constructor(
 
     override fun getRentStationsList(): Single<List<RentStation>> {
         return dictionaryRepo.updateAllDictionaries()
-            .to {
+            .andThen(
                 rentStationApi.getRentStationsList()
                     .map { modelList ->
                         return@map modelList.map { it.toDto() }
                     }
-            }
+            )
             .subscribeOn(Schedulers.io())
     }
 
