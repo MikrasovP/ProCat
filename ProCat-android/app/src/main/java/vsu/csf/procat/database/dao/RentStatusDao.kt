@@ -5,11 +5,13 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import vsu.csf.procat.database.entity.RentStatus
 
 @Dao
 abstract class RentStatusDao {
+
     @Insert
     abstract fun save(rentStatus: RentStatus): Completable
 
@@ -24,6 +26,13 @@ abstract class RentStatusDao {
     @Query("DELETE FROM RentStatus")
     abstract fun clear(): Completable
 
+    @Query("SELECT name FROM RentStatus WHERE id=:statusId")
+    abstract fun getNameById(statusId: Long): Maybe<String>
+
     @Query("SELECT * FROM RentStatus")
     abstract fun getRentStatuses(): Single<List<RentStatus>>
+
+    @Query("SELECT name FROM RentStatus")
+    abstract fun getRentStatusesNames(): Single<List<String>>
+
 }

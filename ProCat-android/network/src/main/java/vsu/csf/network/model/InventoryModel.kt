@@ -8,7 +8,7 @@ data class InventoryModel(
     val id: Long,
     @SerializedName("inventory_name")
     val name: String,
-    // TODO: добавить name, когда будет готова er-диаграмма
+    @SerializedName("type_id")
     val typeId: Long,
     @SerializedName("path_to_img")
     val imageSrc: String,
@@ -16,8 +16,6 @@ data class InventoryModel(
     val pricePerHour: BigDecimal,
     @SerializedName("station_id")
     val stationId: Long,
-    // TODO: добавить name, когда будет готова er-диаграмма
     @SerializedName("availability_status")
     val availabilityStatusId: Long,
-
 )
