@@ -1,5 +1,6 @@
 package proCat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,5 +17,6 @@ public class AvailabilityStatus {
     @Column(name = "status_name", nullable = false)
     private String statusName;
     @OneToMany(mappedBy = "availabilityStatus")
+    @JsonIgnore
     private Set<RentInventory> inventorySet;
 }
