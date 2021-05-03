@@ -18,14 +18,14 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="8dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:onClick="@{clickListener}"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="12dp"
-        app:cardElevation="8dp">
+        app:cardElevation="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -36,11 +36,10 @@
                 android:id="@+id/inventory_iv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="1.75"
                 app:layout_constraintTop_toTopOf="parent"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/test_bike"
-                />
+                tools:src="@drawable/test_bike" />
 
             <TextView
                 android:id="@+id/rent_station_name_tv"
@@ -53,8 +52,8 @@
                 android:paddingVertical="4dp"
                 android:text="@{vm.typeName}"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/inventory_iv"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inventory_iv"
                 tools:text="Велосипед" />
 
             <TextView
@@ -62,25 +61,48 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
-                android:layout_marginTop="8dp"
                 android:paddingHorizontal="8dp"
                 android:paddingTop="0dp"
                 android:paddingBottom="4dp"
                 android:text="@{vm.name}"
                 android:textColor="@color/font"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/rent_station_name_tv"
+                android:textSize="19sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/middle_vertical_divider"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rent_station_name_tv"
                 tools:text="Giant Talon" />
 
+            <View
+                android:id="@+id/middle_vertical_divider"
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inventory_iv" />
+
             <TextView
+                android:id="@+id/price_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
+                android:layout_margin="18dp"
                 android:textSize="22sp"
-                app:layout_constraintTop_toBottomOf="@id/inventory_iv"
+                android:text="@{vm.pricePerHourString}"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="15000 ₽ в час"/>
+                app:layout_constraintTop_toBottomOf="@id/inventory_iv"
+                tools:text="15 000₽ в час" />
+
+            <TextView
+                android:id="@+id/availability_status_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:gravity="end"
+                android:text="@{vm.availabilityStatus}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/middle_vertical_divider"
+                app:layout_constraintTop_toBottomOf="@id/price_tv"
+                tools:text="Доступно"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

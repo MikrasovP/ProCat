@@ -34,7 +34,7 @@ class RentInventoryListViewModel @Inject constructor(
                     isLoadingFromServer.value = false
                     networkError.value = false
                 }, { ex ->
-                    Timber.e(ex, "Error while getting retrieving stations list")
+                    Timber.e(ex, "Error while retrieving inventory list for stationId = $rentStationId")
                     isLoadingFromServer.value = false
                     networkError.value = true
                 }).also { compositeDisposable.add(it) }
