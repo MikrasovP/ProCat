@@ -1,9 +1,11 @@
 package proCat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,5 +24,8 @@ public class RentStation {
     private Double latiitude;
     @Column(name = "longitude", nullable = false)
     private Double longitude;
+    @OneToMany(mappedBy = "rentStation")
+    @JsonIgnore
+    private Set<RentInventory> inventorySet;
 
 }
