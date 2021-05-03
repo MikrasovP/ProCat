@@ -16,14 +16,14 @@ import proCat.service.RentStationService;
 import java.util.List;
 
 @RestController
-public class RentController {
+public class StationController {
     private final RentStationMapper rentStationMapper;
     private final RentStationService rentStationService;
     private final RentInventoryService inventoryService;
     private final RentInventoryMapper rentInventoryMapper;
 
     @Autowired
-    public RentController(RentStationMapper rentStationMapper, RentStationService rentStationService, RentInventoryService inventoryService, RentInventoryMapper rentInventoryMapper) {
+    public StationController(RentStationMapper rentStationMapper, RentStationService rentStationService, RentInventoryService inventoryService, RentInventoryMapper rentInventoryMapper) {
         this.rentStationMapper = rentStationMapper;
         this.rentStationService = rentStationService;
         this.inventoryService = inventoryService;
