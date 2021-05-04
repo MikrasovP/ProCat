@@ -9,7 +9,7 @@ import proCat.entity.RentInventory;
 import java.util.List;
 
 @Repository
-public interface RentInventoryRepository extends JpaRepository<RentInventory,Long> {
-    @Query(value = "select ri.* from rent_inventory ri where station_id=:station_id",nativeQuery = true)
-    List<RentInventory> findAllByStationId(@Param("station_id")Long stationId);
+public interface RentInventoryRepository extends JpaRepository<RentInventory, Long> {
+    @Query(value = "select ri.* from rent_inventory ri where station_id=:station_id", nativeQuery = true)
+    List<RentInventory> findAllByStationId(@Param("station_id") Long stationId);
 }
