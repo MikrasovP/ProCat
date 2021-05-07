@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import vsu.csf.network.BuildConfig.IMAGE_SERVER_URL
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ItemRentInventoryCardBinding
 import vsu.csf.procat.model.RentInventory
@@ -55,7 +56,7 @@ class RentInventoryListAdapter(
             binding.vm = RentInventoryViewModel(rentInventory)
             if (rentInventory.pathToImage.isNotEmpty())
                 Glide.with(binding.root)
-                    .load(rentInventory.pathToImage)
+                    .load(IMAGE_SERVER_URL + rentInventory.pathToImage)
                     .centerCrop()
                     .into(binding.inventoryIv)
             binding.executePendingBindings()

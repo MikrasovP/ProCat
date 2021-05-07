@@ -11,6 +11,5 @@ class RentInventoryViewModel(
     val pricePerHourString = getPricePerHour(rentInventory.pricePerHour)
     val availabilityStatus = rentInventory.availabilityStatus
 
-    private fun getPricePerHour(price: BigDecimal) =
-        (price.intValueExact() / 100).toString() + "₽ в час"
+    private fun getPricePerHour(price: BigDecimal) = "$price₽ в час"
 }

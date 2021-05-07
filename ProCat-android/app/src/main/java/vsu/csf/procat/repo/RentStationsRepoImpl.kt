@@ -27,38 +27,7 @@ class RentStationsRepoImpl @Inject constructor(
     }
 
     override fun getInventoryList(rentStationId: Long): Single<List<RentInventory>> =
-        // return rentStationApi.getStationInventory(rentStationId)
-        Single.just(
-            listOf(
-                InventoryModel(
-                    id = 1L,
-                    "Giant P5000",
-                    1L,
-                    "https://hightech.fm/wp-content/uploads/2020/07/SuperStrata_Studio_White_SideView_2370.0-1316x877.jpg",
-                    BigDecimal.valueOf(10000),
-                    1L,
-                    2L,
-                ),
-                InventoryModel(
-                    id = 2L,
-                    "Giant S300",
-                    1L,
-                    "https://contents.mediadecathlon.com/p1849701/k2683e85d6811d43d2fe50afef22cb8d6/1849701_default.jpg?format=auto&quality=60&f=800x0",
-                    BigDecimal.valueOf(5000),
-                    1L,
-                    2L,
-                ),
-                InventoryModel(
-                    id = 3L,
-                    "Burton YEASAYER FW19",
-                    3L,
-                    "https://www.sibalt.ru/images/shoria/info/kak_vibrat_snoubord_02.jpg",
-                    BigDecimal.valueOf(20000),
-                    1L,
-                    2L,
-                ),
-            )
-        )
+        rentStationApi.getStationInventory(rentStationId)
             .map { inventoryList ->
                 inventoryList.map {
                     RentInventory(

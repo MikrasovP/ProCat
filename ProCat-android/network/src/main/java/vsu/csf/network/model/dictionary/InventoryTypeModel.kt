@@ -3,8 +3,8 @@ package vsu.csf.network.model.dictionary
 import com.google.gson.annotations.SerializedName
 
 data class InventoryTypeModel(
-    @SerializedName("type_id")
+    @SerializedName("typeId")
     val id: Long,
-    @SerializedName("type_name")
+    @SerializedName("typeName")
     val name: String,
 )

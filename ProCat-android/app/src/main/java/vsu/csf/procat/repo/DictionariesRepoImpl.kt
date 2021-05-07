@@ -58,34 +58,19 @@ class DictionariesRepoImpl @Inject constructor(
             .subscribeOn(Schedulers.io())
 
     private fun updateAvailabilityStatuses(): Completable =
-        // dictionaryApi.getAvailabilityStatuses()
-        Single.just(listOf(
-            AvailabilityStatusModel(id = 1L, name = "Недоступно"),
-            AvailabilityStatusModel(id = 2L, name = "Свободно"),
-            AvailabilityStatusModel(id = 3L, name = "В ремонте"),
-        ))
+        dictionaryApi.getAvailabilityStatuses()
             .concatMapCompletable { list ->
                 availabilityStatusDao.saveList(list.map { it.toEntity() })
             }
 
     private fun updateInventoryTypes(): Completable =
-        // dictionaryApi.getInventoryTypes()
-        Single.just(listOf(
-            InventoryTypeModel(id = 1L, name = "Велосипед"),
-            InventoryTypeModel(id = 2L, name = "Скейтборд"),
-            InventoryTypeModel(id = 3L, name = "Сноуборд"),
-        ))
+        dictionaryApi.getInventoryTypes()
             .concatMapCompletable { list ->
                 inventoryTypeDao.saveList(list.map { it.toEntity() })
             }
 
     private fun updateRentStatuses(): Completable =
-        // dictionaryApi.getRentStatuses()
-        Single.just(listOf(
-            RentStatusModel(id = 1L, name = "В аренде"),
-            RentStatusModel(id = 2L, name = "Аренда на паузе"),
-            RentStatusModel(id = 3L, name = "Аренда завершена"),
-        ))
+        dictionaryApi.getRentStatuses()
             .concatMapCompletable { list ->
                 rentStatusDao.saveList(list.map { it.toEntity() })
             }
