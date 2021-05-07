@@ -3,8 +3,8 @@ package vsu.csf.network.model.dictionary
 import com.google.gson.annotations.SerializedName
 
 data class RentStatusModel(
-    @SerializedName("status_id")
+    @SerializedName("statusId")
     val id: Long,
-    @SerializedName("status_name")
+    @SerializedName("statusName")
     val name: String,
 )

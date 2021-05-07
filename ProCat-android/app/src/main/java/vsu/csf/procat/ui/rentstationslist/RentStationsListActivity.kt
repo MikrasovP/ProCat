@@ -14,6 +14,7 @@ import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityRentStationsListBinding
 import vsu.csf.procat.model.RentStation
 import vsu.csf.procat.ui.ProfileActivity
+import vsu.csf.procat.ui.rentinventorylist.RentInventoryListActivity
 
 @AndroidEntryPoint
 class RentStationsListActivity : AppCompatActivity() {
@@ -59,8 +60,7 @@ class RentStationsListActivity : AppCompatActivity() {
     }
 
     private fun onRentStationClick(rentStation: RentStation) {
-        Toast.makeText(this, "Rent station, id: ${rentStation.id}", Toast.LENGTH_SHORT)
-            .show()
+        RentInventoryListActivity.start(this, rentStation.id)
     }
 
     companion object {

@@ -3,8 +3,11 @@ package vsu.csf.procat.repo
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import vsu.csf.network.api.RentStationApi
+import vsu.csf.network.model.InventoryModel
+import vsu.csf.procat.model.RentInventory
 import vsu.csf.procat.model.RentStation
 import vsu.csf.procat.model.toDto
+import java.math.BigDecimal
 import javax.inject.Inject
 
 class RentStationsRepoImpl @Inject constructor(
@@ -23,4 +26,19 @@ class RentStationsRepoImpl @Inject constructor(
             .subscribeOn(Schedulers.io())
     }
 
+    override fun getInventoryList(rentStationId: Long): Single<List<RentInventory>> =
+        rentStationApi.getStationInventory(rentStationId)
+            .map { inventoryList ->
+                inventoryList.map {
+                    RentInventory(
+                        id = it.id,
+                        name = it.name,
+                        typeName = dictionaryRepo.getInventoryTypeById(it.typeId).blockingGet(),
+                        pathToImage = it.imageSrc,
+                        pricePerHour = it.pricePerHour,
+                        availabilityStatus =
+                        dictionaryRepo.getAvailabilityStatus(it.availabilityStatusId).blockingGet(),
+                    )
+                }
+            }.subscribeOn(Schedulers.io())
 }
