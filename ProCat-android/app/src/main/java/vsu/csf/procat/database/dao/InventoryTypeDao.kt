@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import vsu.csf.procat.database.entity.InventoryType
 
@@ -24,6 +25,9 @@ abstract class InventoryTypeDao {
 
     @Query("DELETE FROM InventoryType")
     abstract fun clear(): Completable
+
+    @Query("SELECT name FROM InventoryType WHERE id=:inventoryTypeId")
+    abstract fun getNameById(inventoryTypeId: Long): Maybe<String>
 
     @Query("SELECT * FROM InventoryType")
     abstract fun getInventoryTypes(): Single<List<InventoryType>>

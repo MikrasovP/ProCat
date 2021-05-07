@@ -24,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.rentinventorylist.RentInventoryListActivity" />
         <activity android:name=".ui.rentstationslist.RentStationsListActivity" />
         <activity android:name=".ui.ProfileActivity" />
 
