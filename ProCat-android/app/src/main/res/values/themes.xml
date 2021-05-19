@@ -30,4 +30,14 @@
     <style name="noAnimTheme" parent="Theme.AppCompat">
         <item name="android:windowAnimationStyle">@null</item>
     </style>
+
+    <style name="Theme.ProCat.TextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/accent_orange</item>
+        <item name="colorControlNormal">@color/accent_orange</item>
+        <item name="colorControlActivated">@color/accent_orange</item>
+    </style>
+
+    <style name="Theme.ProCat.FloatingButton" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="android:backgroundTint">@color/accent_orange</item>
+    </style>
 </resources>

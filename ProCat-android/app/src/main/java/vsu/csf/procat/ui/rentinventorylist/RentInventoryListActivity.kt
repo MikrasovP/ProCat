@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityRentInventoryListBinding
 import vsu.csf.procat.model.RentInventory
-import vsu.csf.procat.ui.ProfileActivity
+import vsu.csf.procat.ui.profile.ProfileActivity
 
 @AndroidEntryPoint
 class RentInventoryListActivity : AppCompatActivity() {

@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityRentStationsListBinding
 import vsu.csf.procat.model.RentStation
-import vsu.csf.procat.ui.ProfileActivity
+import vsu.csf.procat.ui.profile.ProfileActivity
 import vsu.csf.procat.ui.rentinventorylist.RentInventoryListActivity
 
 @AndroidEntryPoint
