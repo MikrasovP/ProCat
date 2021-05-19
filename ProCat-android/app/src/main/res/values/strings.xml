@@ -2,6 +2,15 @@
     <string name="app_name">ProCat</string>
 
     <string name="toolbar_profile_action">Профиль</string>
+    <string name="phone_number_title">Номер телефона</string>
+    <string name="email_title">Email</string>
+    <string name="confirmation_code_title">Код подтверждения</string>
+    <string name="send_confirmation_code_title">Получить код подтверждения</string>
+    <string name="scan_item">Сканировать код</string>
+    <string name="login">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+
+    <string name="auth_promo">Для начала аренды войдите или зарегистрируйтесь</string>
 
     <string name="update_error">При обновлении данных произошла ошибка</string>
 </resources>
