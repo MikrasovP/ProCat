@@ -1,9 +1,6 @@
 package vsu.csf.procat.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
@@ -12,7 +9,7 @@ import vsu.csf.procat.database.entity.InventoryType
 @Dao
 abstract class InventoryTypeDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun save(inventoryType: InventoryType): Completable
 
     @Insert

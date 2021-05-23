@@ -18,6 +18,7 @@
             android:id="@+id/profile_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:title="@string/toolbar_profile_action"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/Theme.ProCat.PopupOverlay"
             app:theme="@style/Theme.ProCat.AppBarOverlay" />
@@ -40,6 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:fontFamily="@font/montserrat_bold"
                     android:padding="12dp"
                     android:text="@string/auth_promo"
                     android:textSize="24sp"
@@ -50,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_margin="12dp"
-                    android:onClick="@{(view) -> activity.openLoginActivity()}"
+                    android:onClick="@{(view) -> activity.openAuthActivity()}"
                     android:text="@string/login"
                     app:layout_constraintTop_toBottomOf="@id/auth_promo_tv" />
 
@@ -60,7 +62,7 @@
                     android:layout_height="56dp"
                     android:layout_margin="12dp"
                     android:backgroundTint="@color/accent_teal"
-                    android:onClick="@{(view) -> activity.openRegistrationActivity()}"
+                    android:onClick="@{(view) -> activity.openAuthActivity()}"
                     android:text="@string/register"
                     app:layout_constraintTop_toBottomOf="@id/login_btn" />
 

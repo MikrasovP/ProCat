@@ -62,7 +62,7 @@ class RentInventoryListActivity : AppCompatActivity() {
     }
 
     private fun onInventoryItemClick(inventory: RentInventory) {
-        Toast.makeText(this, "Inventory id = ${inventory.id}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.rent_item_hint), Toast.LENGTH_SHORT).show()
     }
 
     private fun openRentInventoryDetailActivity() {
