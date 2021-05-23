@@ -1,16 +1,38 @@
 <resources>
     <string name="app_name">ProCat</string>
+    <string name="error">Неизвестная ошибка</string>
+    <string name="network_error">Во время выполнения запроса произошла ошибка.\nПроверьте подключение к сети</string>
 
-    <string name="toolbar_profile_action">Профиль</string>
+    <string name="toolbar_title_auth">Авторизация</string>
     <string name="phone_number_title">Номер телефона</string>
+    <string name="phone_number_wrong">Проверьте правильность номера</string>
     <string name="email_title">Email</string>
+    <string name="email_error">Проверьте правильность введенного email</string>
+    <string name="name_title">Ваше имя</string>
+    <string name="name_error">Имя не может быть меньше 3-х символов</string>
     <string name="confirmation_code_title">Код подтверждения</string>
+    <string name="confirmation_code_error">Введен неверный код</string>
     <string name="send_confirmation_code_title">Получить код подтверждения</string>
+    <string name="continue_title">Продолжить</string>
     <string name="scan_item">Сканировать код</string>
     <string name="login">Войти</string>
     <string name="register">Зарегистрироваться</string>
 
+    <string name="input_phone_number_title">Пожалуйста, введите номер телефона</string>
+    <string name="input_confirmation_title">Введите код из уведомления</string>
+    <string name="registration_offer_title">Учетная запись с таким номером телефона не найдена.\nДля регистрации заполните следующие поля</string>
+    <string name="login_continue">Для входа нажмите на соответствующую кнопку</string>
+
+    <string name="confirmation_notification_title">Код подтверждения</string>
+    <string name="confirmation_notification_text">Ваш код: %s</string>
+    <string name="confirmation_notification_channel_name">Код подтверждения</string>
+    <string name="confirmation_notification_channel_description"> Получение кодов подтверждения</string>
+
+    <string name="toolbar_profile_action">Профиль</string>
+    <string name="toolbar_profile_title">Профиль</string>
     <string name="auth_promo">Для начала аренды войдите или зарегистрируйтесь</string>
+
+    <string name="rent_item_hint">Для начала аренды отсканируйте qr-код на таком предмете</string>
 
     <string name="update_error">При обновлении данных произошла ошибка</string>
 </resources>

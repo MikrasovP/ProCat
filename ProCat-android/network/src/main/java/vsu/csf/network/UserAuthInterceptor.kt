@@ -16,7 +16,7 @@ class UserAuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         var request: Request = chain.request()
         val builder: Request.Builder = request.newBuilder()
-        val token = authHolder.getToken()
+        val token = authHolder.authToken
 
         // Add auth token if we have one
         if (token.isNotBlank())

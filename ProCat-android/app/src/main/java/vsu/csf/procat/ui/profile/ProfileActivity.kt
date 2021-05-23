@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import timber.log.Timber
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityProfileBinding
 import vsu.csf.procat.ui.auth.AuthActivity
@@ -23,12 +22,8 @@ class ProfileActivity : AppCompatActivity() {
         setSupportActionBar(binding.profileToolbar)
     }
 
-    fun openLoginActivity() {
-        AuthActivity.startForLogin(this)
-    }
-
-    fun openRegistrationActivity() {
-        AuthActivity.startForRegistration(this)
+    fun openAuthActivity() {
+        AuthActivity.start(this)
     }
 
     companion object {
