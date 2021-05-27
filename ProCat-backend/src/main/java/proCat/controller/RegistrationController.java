@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import proCat.dto.AuthUserDto;
+import proCat.dto.LoginDto;
 import proCat.dto.RegisterUserDto;
 import proCat.entity.User;
 import proCat.exception.UserNotFoundException;
@@ -26,9 +27,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<AuthUserDto> login(@RequestBody String phone) {
+    public ResponseEntity<AuthUserDto> login(@RequestBody LoginDto loginDto) {
         try {
-            return new ResponseEntity<>(userService.login(phone), HttpStatus.OK);
+            return new ResponseEntity<>(userService.login(loginDto.getPhoneNumber()), HttpStatus.OK);
         } catch (UserNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
