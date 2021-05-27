@@ -1,8 +1,10 @@
 package proCat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -18,4 +20,7 @@ public class User {
     private String phoneNumber;
     @Column(name = "email")
     private String email;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Rent> rentSet;
 }

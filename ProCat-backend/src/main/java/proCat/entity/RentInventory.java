@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -34,4 +35,7 @@ public class RentInventory {
     @JoinColumn(name="station_id")
     @JsonIgnore
     private RentStation rentStation;
+    @OneToMany(mappedBy = "rentInventory")
+    @JsonIgnore
+    private Set<Rent> rentSet;
 }
