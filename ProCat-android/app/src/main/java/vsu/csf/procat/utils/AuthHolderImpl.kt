@@ -54,12 +54,12 @@ class AuthHolderImpl @Inject constructor(
     }
 
     fun login(userModel: UserAuthModel): Completable {
-        authToken = userModel.authToken
         return with(sharedPrefsRepo) {
             saveAuthToken(userModel.authToken)
                 .andThen(saveUsername(userModel.name))
                 .andThen(saveUserEmail(userModel.email))
                 .andThen(saveUserMobilePhone(userModel.phoneNumber))
+                .andThen(Completable.fromAction { getUserData() })
         }
     }
 

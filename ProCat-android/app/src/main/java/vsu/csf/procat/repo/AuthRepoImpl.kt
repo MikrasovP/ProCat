@@ -36,8 +36,7 @@ class AuthRepoImpl @Inject constructor(
     ): Completable {
         return authApi.register(UserRegistrationModel(phoneNumber, name, email))
             .flatMapCompletable {
-                saveUserAuthModel(it)
-                Completable.complete()
+                return@flatMapCompletable saveUserAuthModel(it)
             }
             .subscribeOn(Schedulers.io())
     }
@@ -46,8 +45,8 @@ class AuthRepoImpl @Inject constructor(
         authHolder.logout()
     }.subscribeOn(Schedulers.io())
 
-    private fun saveUserAuthModel(userModel: UserAuthModel) {
+    private fun saveUserAuthModel(userModel: UserAuthModel) =
         authHolder.login(userModel)
-    }
+            .subscribeOn(Schedulers.io())
 
 }

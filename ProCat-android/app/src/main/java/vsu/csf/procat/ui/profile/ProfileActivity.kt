@@ -6,10 +6,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import dagger.hilt.android.AndroidEntryPoint
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityProfileBinding
 import vsu.csf.procat.ui.auth.AuthActivity
 
+@AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
@@ -22,8 +24,13 @@ class ProfileActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
         binding.activity = this
         binding.lifecycleOwner = this
+        binding.vm = viewModel
 
         setSupportActionBar(binding.profileToolbar)
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.updateAuthStatus()
     }
 
