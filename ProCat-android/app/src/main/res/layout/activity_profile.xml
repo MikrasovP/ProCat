@@ -19,13 +19,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/profile_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_logout_toolbar"
             app:popupTheme="@style/Theme.ProCat.PopupOverlay"
             app:theme="@style/Theme.ProCat.AppBarOverlay"
             app:title="@string/toolbar_profile_action" />

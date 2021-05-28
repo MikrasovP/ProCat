@@ -23,8 +23,7 @@ class AuthRepoImpl @Inject constructor(
     override fun submitLogin(phoneNumber: String): Completable {
         return authApi.login(UserLoginModel(phoneNumber))
             .flatMapCompletable {
-                saveUserAuthModel(it)
-                Completable.complete()
+                return@flatMapCompletable saveUserAuthModel(it)
             }
             .subscribeOn(Schedulers.io())
     }
@@ -41,9 +40,9 @@ class AuthRepoImpl @Inject constructor(
             .subscribeOn(Schedulers.io())
     }
 
-    override fun logout(): Completable = Completable.fromAction {
+    override fun logout(): Completable =
         authHolder.logout()
-    }.subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
 
     private fun saveUserAuthModel(userModel: UserAuthModel) =
         authHolder.login(userModel)

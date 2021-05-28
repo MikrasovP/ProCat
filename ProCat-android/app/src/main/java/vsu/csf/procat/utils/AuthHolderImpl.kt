@@ -1,13 +1,14 @@
 package vsu.csf.procat.utils
 
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Maybe
 import timber.log.Timber
 import vsu.csf.network.AuthHolder
 import vsu.csf.network.model.auth.UserAuthModel
 import vsu.csf.procat.utils.prefs.SharedPrefsRepo
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AuthHolderImpl @Inject constructor(
     private val sharedPrefsRepo: SharedPrefsRepo,
 ) : AuthHolder {
@@ -19,47 +20,55 @@ class AuthHolderImpl @Inject constructor(
     var userEmail: String = ""
 
     init {
-        getUserData()
+        updateUserData()
+            .subscribe({ }, { ex -> Timber.e(ex, "Error while reading user data") })
     }
 
-    private fun getUserData() {
+    private fun updateUserData(): Completable {
         val tokenCompletable = sharedPrefsRepo.getAuthToken()
             .doOnSuccess { authToken = it }
             .doOnComplete { authToken = "" }
             .doOnError { Timber.e(it, "Error while reading saved token from prefs") }
+            .ignoreElement()
         val usernameCompletable = sharedPrefsRepo.getUsername()
             .doOnSuccess { username = it }
             .doOnComplete { username = "" }
             .doOnError { Timber.e(it, "Error while reading saved username from prefs") }
+            .ignoreElement()
         val userMobilePhoneCompletable = sharedPrefsRepo.getUserMobilePhone()
             .doOnSuccess { userPhoneNumber = it }
             .doOnComplete { userPhoneNumber = "" }
             .doOnError { Timber.e(it, "Error while reading saved user phone from prefs") }
+            .ignoreElement()
         val userEmailCompletable = sharedPrefsRepo.getUserEmail()
             .doOnSuccess { userEmail = it }
             .doOnComplete { userEmail = "" }
             .doOnError { Timber.e(it, "Error while reading saved user email from prefs") }
+            .ignoreElement()
 
-        Maybe.mergeArray(
+        return Completable.concatArray(
             tokenCompletable,
             usernameCompletable,
             userMobilePhoneCompletable,
-            userEmailCompletable
-        ).subscribe({}, Timber::e)
+            userEmailCompletable,
+        )
     }
 
     fun logout(): Completable {
         authToken = ""
         return sharedPrefsRepo.clearAuthToken()
+            .andThen(updateUserData())
     }
 
     fun login(userModel: UserAuthModel): Completable {
         return with(sharedPrefsRepo) {
-            saveAuthToken(userModel.authToken)
-                .andThen(saveUsername(userModel.name))
-                .andThen(saveUserEmail(userModel.email))
-                .andThen(saveUserMobilePhone(userModel.phoneNumber))
-                .andThen(Completable.fromAction { getUserData() })
+            Completable.concatArray(
+                saveAuthToken(userModel.authToken),
+                saveUsername(userModel.name),
+                saveUserEmail(userModel.email),
+                saveUserMobilePhone(userModel.phoneNumber),
+                updateUserData(),
+            )
         }
     }
 

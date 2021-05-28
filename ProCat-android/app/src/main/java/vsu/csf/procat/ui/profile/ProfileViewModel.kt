@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import vsu.csf.procat.utils.AuthHolderImpl
 import java.util.*
@@ -29,6 +30,16 @@ class ProfileViewModel @Inject constructor(
 
     fun updateAuthStatus() {
         isAuthorized.value = authHolderImpl.authToken.isNotBlank()
+    }
+
+    fun logout() {
+        authHolderImpl.logout()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                updateAuthStatus()
+            }, { ex ->
+                Timber.e(ex, "An error occurred while logging out")
+            })
     }
 
     private fun getFormattedPhoneNumber(unformattedPhoneNumber: String): String =

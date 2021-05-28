@@ -17,6 +17,7 @@
     <string name="scan_item">Сканировать код</string>
     <string name="login">Войти</string>
     <string name="register">Зарегистрироваться</string>
+    <string name="logout">Выйти из аккаунта</string>
 
     <string name="input_phone_number_title">Пожалуйста, введите номер телефона</string>
     <string name="input_confirmation_title">Введите код из уведомления</string>
