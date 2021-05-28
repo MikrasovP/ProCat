@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 data class UserAuthModel(
     @SerializedName("phoneNumber")
     val phoneNumber: String,
-    @SerializedName("name")
+    @SerializedName("username")
     val name: String,
     @SerializedName("email")
     val email: String,
-    @SerializedName("authToken")
+    @SerializedName("token")
     val authToken: String,
 )

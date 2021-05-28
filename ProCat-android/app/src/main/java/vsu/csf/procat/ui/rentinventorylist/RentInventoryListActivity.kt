@@ -65,10 +65,6 @@ class RentInventoryListActivity : AppCompatActivity() {
         Toast.makeText(this, getString(R.string.rent_item_hint), Toast.LENGTH_SHORT).show()
     }
 
-    private fun openRentInventoryDetailActivity() {
-
-    }
-
     companion object {
         private const val RENT_STATION_ID_EXTRA = "rent_station_id"
 

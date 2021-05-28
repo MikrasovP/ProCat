@@ -17,6 +17,7 @@
     <string name="scan_item">Сканировать код</string>
     <string name="login">Войти</string>
     <string name="register">Зарегистрироваться</string>
+    <string name="logout">Выйти из аккаунта</string>
 
     <string name="input_phone_number_title">Пожалуйста, введите номер телефона</string>
     <string name="input_confirmation_title">Введите код из уведомления</string>
@@ -31,6 +32,9 @@
     <string name="toolbar_profile_action">Профиль</string>
     <string name="toolbar_profile_title">Профиль</string>
     <string name="auth_promo">Для начала аренды войдите или зарегистрируйтесь</string>
+    <string name="profile_username">Добро пожаловать,\n%s</string>
+    <string name="profile_phone">Номер телефона: %s</string>
+    <string name="profile_email">Email: %s</string>
 
     <string name="rent_item_hint">Для начала аренды отсканируйте qr-код на таком предмете</string>
 
