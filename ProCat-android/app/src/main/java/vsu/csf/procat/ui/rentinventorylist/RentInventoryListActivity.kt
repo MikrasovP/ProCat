@@ -14,6 +14,7 @@ import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityRentInventoryListBinding
 import vsu.csf.procat.model.RentInventory
 import vsu.csf.procat.ui.profile.ProfileActivity
+import vsu.csf.procat.ui.scanner.ScannerActivity
 
 @AndroidEntryPoint
 class RentInventoryListActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class RentInventoryListActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
         binding.rentInventoryRv.adapter = adapter
+        binding.activity = this
 
         val rentStationId = intent.getLongExtra(RENT_STATION_ID_EXTRA, Long.MIN_VALUE)
         if (rentStationId != Long.MIN_VALUE)
@@ -63,6 +65,10 @@ class RentInventoryListActivity : AppCompatActivity() {
 
     private fun onInventoryItemClick(inventory: RentInventory) {
         Toast.makeText(this, getString(R.string.rent_item_hint), Toast.LENGTH_SHORT).show()
+    }
+
+    fun onScanButtonClick() {
+        ScannerActivity.startForResult(this)
     }
 
     companion object {

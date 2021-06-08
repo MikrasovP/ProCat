@@ -15,6 +15,7 @@ import vsu.csf.procat.databinding.ActivityRentStationsListBinding
 import vsu.csf.procat.model.RentStation
 import vsu.csf.procat.ui.profile.ProfileActivity
 import vsu.csf.procat.ui.rentinventorylist.RentInventoryListActivity
+import vsu.csf.procat.ui.scanner.ScannerActivity
 
 @AndroidEntryPoint
 class RentStationsListActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class RentStationsListActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
         binding.rentStationsRv.adapter = adapter
+        binding.activity = this
 
         observeViewModel()
 
@@ -57,6 +59,10 @@ class RentStationsListActivity : AppCompatActivity() {
             R.id.profile_item -> ProfileActivity.start(this)
         }
         return true
+    }
+
+    fun onScannerButtonClick() {
+        ScannerActivity.startForResult(this)
     }
 
     private fun onRentStationClick(rentStation: RentStation) {
