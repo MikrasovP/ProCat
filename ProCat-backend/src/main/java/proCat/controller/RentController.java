@@ -1,22 +1,69 @@
 package proCat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import proCat.dto.RentInventoryDTO;
 import proCat.dto.StartRentDto;
+import proCat.dto.RentDataForPayDto;
+import proCat.exception.PaymentTimeOutException;
+import proCat.mapper.RentInventoryMapper;
+import proCat.security.JwtFilter;
+import proCat.service.RentInventoryService;
 import proCat.service.RentService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 @RestController
 public class RentController {
     private final RentService rentService;
+    private final RentInventoryService inventoryService;
+    private final RentInventoryMapper rentInventoryMapper;
+    private final JwtFilter jwtFilter;
 
     @Autowired
-    public RentController(RentService rentService) {
+    public RentController(RentService rentService, RentInventoryService inventoryService, RentInventoryMapper rentInventoryMapper, JwtFilter jwtFilter) {
         this.rentService = rentService;
+        this.inventoryService = inventoryService;
+        this.rentInventoryMapper = rentInventoryMapper;
+        this.jwtFilter = jwtFilter;
     }
+
     @PostMapping("/rent/start")
-    public void startRent(@RequestBody StartRentDto startRentDto){
+    public ResponseEntity<?> startRent(@RequestBody StartRentDto startRentDto) {
         rentService.startRent(startRentDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/rent/inventory/{inventoryId}")
+    public ResponseEntity<RentInventoryDTO> getInventoryByIdForRent(@PathVariable Long inventoryId, HttpServletRequest httpServletRequest) {
+        String userPhoneNumber = jwtFilter.getSubjectFromToken(httpServletRequest);
+        if (rentService.isInventoryRentedByUser(inventoryId, userPhoneNumber) || !inventoryService.isInventoryInRent(inventoryId)) {
+            RentInventoryDTO inventoryDTO = rentInventoryMapper.toRentInventoryDTO(inventoryService.getInventoryById(inventoryId).get());
+            return new ResponseEntity<>(inventoryDTO, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("rent/stop")
+    public ResponseEntity<RentDataForPayDto> stopRent(@RequestBody Long inventoryId, HttpServletRequest httpServletRequest) {
+        String userPhoneNumber = jwtFilter.getSubjectFromToken(httpServletRequest);
+        Long rentId = rentService.stopRent(inventoryId, userPhoneNumber);
+        BigDecimal amountToPay = rentService.getFinalPrice(rentId);
+        return new ResponseEntity<>(new RentDataForPayDto(rentId, amountToPay), HttpStatus.OK);
+    }
+
+    @PostMapping("rent/pay")
+    public ResponseEntity<?> payForRent(@RequestBody Long rentId) {
+        try {
+            rentService.payForRent(rentId);
+            rentService.closeRent(rentId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (PaymentTimeOutException e) {
+            rentService.renewRent(rentId);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
