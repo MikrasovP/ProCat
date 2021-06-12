@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityRentInventoryListBinding
 import vsu.csf.procat.model.RentInventory
-import vsu.csf.procat.ui.ProfileActivity
+import vsu.csf.procat.ui.profile.ProfileActivity
 
 @AndroidEntryPoint
 class RentInventoryListActivity : AppCompatActivity() {
@@ -62,11 +62,7 @@ class RentInventoryListActivity : AppCompatActivity() {
     }
 
     private fun onInventoryItemClick(inventory: RentInventory) {
-        Toast.makeText(this, "Inventory id = ${inventory.id}", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun openRentInventoryDetailActivity() {
-
+        Toast.makeText(this, getString(R.string.rent_item_hint), Toast.LENGTH_SHORT).show()
     }
 
     companion object {

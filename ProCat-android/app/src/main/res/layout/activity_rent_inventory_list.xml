@@ -39,6 +39,7 @@
                 android:id="@+id/rent_inventory_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingBottom="64dp"
                 android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_rent_inventory_card"
@@ -46,6 +47,16 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            style="@style/Theme.ProCat.FloatingButton"
+            android:id="@+id/scan_code_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/scan_item"
+            app:icon="@drawable/ic_qr_code_scanner_black_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

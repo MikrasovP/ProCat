@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="vsu.csf.procat.ui.auth.AuthViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/auth_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/menu_profile_toolbar"
+                app:popupTheme="@style/Theme.ProCat.PopupOverlay"
+                app:theme="@style/Theme.ProCat.AppBarOverlay"
+                app:title="@string/toolbar_title_auth" />
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center_vertical"
+                android:minHeight="96dp"
+                android:padding="16dp"
+                android:text="@{vm.titleTextStringId}"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/auth_toolbar"
+                tools:text="Пожалуйста, введите номер" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_number_et_layout"
+                style="@style/Theme.ProCat.TextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:hint="@string/phone_number_title"
+                app:errorEnabled="@{vm.isPhoneNumberError}"
+                app:errorText="@{vm.isPhoneNumberError ? @string/phone_number_wrong : null}"
+                app:layout_constraintTop_toBottomOf="@id/title_tv">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_number_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="1234567890+-() "
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_et_layout"
+                style="@style/Theme.ProCat.TextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:hint="@string/name_title"
+                android:visibility="@{vm.isRegistrationViewsVisible ? View.VISIBLE : View.GONE}"
+                app:errorEnabled="@{vm.isNameError}"
+                app:errorText="@{vm.isNameError ? @string/name_error : null}"
+                app:layout_constraintTop_toBottomOf="@id/phone_number_et_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:lines="1"
+                    android:text="@={vm.name}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_et_layout"
+                style="@style/Theme.ProCat.TextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:hint="@string/email_title"
+                android:visibility="@{vm.isRegistrationViewsVisible ? View.VISIBLE : View.GONE}"
+                app:errorEnabled="@{vm.isEmailError}"
+                app:errorText="@{vm.isEmailError ? @string/email_error : null}"
+                app:layout_constraintTop_toBottomOf="@id/name_et_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
+                    android:text="@={vm.email}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm_code_btn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_margin="12dp"
+                android:backgroundTint="@color/accent_teal"
+                android:onClick="@{() -> vm.onGetConfirmationCodeClick()}"
+                android:text="@string/send_confirmation_code_title"
+                android:visibility="@{vm.isConfirmationButtonVisible ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@id/email_et_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/confirm_code_et"
+                style="@style/Theme.ProCat.TextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:hint="@string/confirmation_code_title"
+                android:visibility="@{vm.isConfirmationTextVisible()? View.VISIBLE : View.GONE}"
+                app:errorEnabled="@{vm.confirmationCodeError}"
+                app:errorText="@{vm.confirmationCodeError ? @string/confirmation_code_error : null}"
+                app:layout_constraintTop_toBottomOf="@id/confirm_code_btn">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:text="@={vm.confirmationCodeText}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_confirm_code_btn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_margin="12dp"
+                android:backgroundTint="@color/accent_teal"
+                android:onClick="@{() -> vm.checkConfirmationCode()}"
+                android:text="@string/continue_title"
+                android:visibility="@{vm.isConfirmationTextVisible ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@id/confirm_code_et" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/confirmation_code_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:indeterminate="true"
+                android:visibility="@{vm.isConfirmationProgressBarVisible() ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toTopOf="@id/submit_confirm_code_btn" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_margin="12dp"
+                android:backgroundTint="@color/accent_teal"
+                android:onClick="@{() -> vm.submitLogin()}"
+                android:text="@string/login"
+                android:visibility="@{vm.isLoginButtonVisible ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@id/submit_confirm_code_btn" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_registration_btn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_margin="12dp"
+                android:backgroundTint="@color/accent_teal"
+                android:onClick="@{() -> vm.submitRegister()}"
+                android:text="@string/register"
+                android:visibility="@{vm.isRegistrationViewsVisible ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@id/submit_login_btn" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/auth_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:indeterminate="true"
+                android:visibility="@{vm.isAuthProgressBarVisible ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@id/submit_registration_btn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -1,11 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="activity"
+            type="vsu.csf.procat.ui.profile.ProfileActivity" />
+
+        <variable
+            name="vm"
+            type="vsu.csf.procat.ui.profile.ProfileViewModel" />
+
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_logout_toolbar"
+            app:popupTheme="@style/Theme.ProCat.PopupOverlay"
+            app:theme="@style/Theme.ProCat.AppBarOverlay"
+            app:title="@string/toolbar_profile_action" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/auth_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:visibility="@{vm.isAuthorized ? View.GONE : View.VISIBLE}"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="8dp"
+            app:layout_constraintTop_toBottomOf="@id/profile_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/auth_promo_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/auth_promo"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/login_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_margin="12dp"
+                    android:onClick="@{(view) -> activity.openAuthActivity()}"
+                    android:text="@string/login"
+                    app:layout_constraintTop_toBottomOf="@id/auth_promo_tv" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/register_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_margin="12dp"
+                    android:backgroundTint="@color/accent_teal"
+                    android:onClick="@{(view) -> activity.openAuthActivity()}"
+                    android:text="@string/register"
+                    app:layout_constraintTop_toBottomOf="@id/login_btn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/user_data_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:visibility="@{vm.isAuthorized ? View.VISIBLE : View.GONE}"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="8dp"
+            app:layout_constraintTop_toBottomOf="@id/auth_card"
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/username_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@{@string/profile_username(vm.userName)}"
+                    android:textSize="22sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Добро пожаловать, \nТестовый Тест Тестович" />
+
+                <TextView
+                    android:id="@+id/phone_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@{@string/profile_phone(vm.userMobilePhone)}"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/username_tv"
+                    tools:text="Номер телефона: +7(920)123-23-34" />
+
+                <TextView
+                    android:id="@+id/email_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@{@string/profile_email(vm.userEmail)}"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/phone_tv"
+                    tools:text="Email: testtesttesttest2021@test.com" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/scan_code_btn"
+            style="@style/Theme.ProCat.FloatingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/scan_item"
+            app:icon="@drawable/ic_qr_code_scanner_black_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
