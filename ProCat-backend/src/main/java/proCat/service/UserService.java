@@ -30,7 +30,7 @@ public class UserService {
     }
 
     public AuthUserDto login(String phoneNumber) throws UserNotFoundException {
-        Optional<User> user = userRepository.getUserByPhoneNumber(phoneNumber);
+        Optional<User> user = userRepository.getByPhoneNumber(phoneNumber);
         if (!user.isPresent()) {
             throw new UserNotFoundException("No registered user with this phone number");
         }

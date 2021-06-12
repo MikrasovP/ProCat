@@ -39,5 +39,6 @@ public class RegistrationController {
     public ResponseEntity<AuthUserDto> register(@RequestBody RegisterUserDto user) {
         return new ResponseEntity<>(userService.addUser(user), HttpStatus.OK);
     }
+
 }
 
