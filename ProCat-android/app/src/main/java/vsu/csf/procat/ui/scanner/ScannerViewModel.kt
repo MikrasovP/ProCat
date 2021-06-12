@@ -12,7 +12,7 @@ class ScannerViewModel @Inject constructor() : ViewModel() {
         if (rawCode == null || !rawCode.startsWith(PROCAT_QR_START, ignoreCase = false))
             return
 
-        itemUuid.value = rawCode.substring(PROCAT_QR_START.length - 1)
+        itemUuid.value = rawCode.substring(PROCAT_QR_START.length)
     }
 
     companion object {

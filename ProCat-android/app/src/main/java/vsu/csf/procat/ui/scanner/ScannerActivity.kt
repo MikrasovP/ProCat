@@ -2,12 +2,13 @@ package vsu.csf.procat.ui.scanner
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.os.Bundle
 import android.util.DisplayMetrics
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
@@ -77,13 +78,13 @@ class ScannerActivity : AppCompatActivity() {
 
     private fun observeItemUuid() {
         scannerViewModel.itemUuid.observe(this) { uuid ->
-            if(uuid == null || callingActivity == null)
+            if (uuid == null || callingActivity == null)
                 return@observe
-                setResult(
-                    RESULT_OK,
-                    Intent().putExtra(ITEM_UUID_RESULT_CODE, uuid),
-                )
-                finish()
+            setResult(
+                RESULT_OK,
+                Intent().putExtra(ITEM_UUID_RESULT_EXTRA, uuid),
+            )
+            finish()
         }
     }
 
@@ -166,7 +167,8 @@ class ScannerActivity : AppCompatActivity() {
         imageProxy: ImageProxy,
     ) {
 
-        val inputImage = InputImage.fromMediaImage(imageProxy.image!!, imageProxy.imageInfo.rotationDegrees)
+        val inputImage =
+            InputImage.fromMediaImage(imageProxy.image!!, imageProxy.imageInfo.rotationDegrees)
 
         barcodeScanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
@@ -238,14 +240,13 @@ class ScannerActivity : AppCompatActivity() {
         private const val RATIO_4_3_VALUE = 4.0 / 3.0
         private const val RATIO_16_9_VALUE = 16.0 / 9.0
 
-        private const val SCAN_QR_REQUEST_CODE = 845361218
-        private const val ITEM_UUID_RESULT_CODE = "ITEM_UUID"
+        const val ITEM_UUID_RESULT_EXTRA = "ITEM_UUID"
 
-        fun startForResult(context: Activity) {
-            context.startActivityForResult(
-                Intent(context, ScannerActivity::class.java),
-                SCAN_QR_REQUEST_CODE
-            )
+        fun startForResult(
+            context: AppCompatActivity,
+            resultLauncher: ActivityResultLauncher<Intent>,
+        ) {
+            resultLauncher.launch(Intent(context, ScannerActivity::class.java))
         }
     }
 
