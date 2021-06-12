@@ -7,6 +7,7 @@ import proCat.repository.RentInventoryRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RentInventoryService {
@@ -21,11 +22,11 @@ public class RentInventoryService {
         return inventoryRepository.findAllByStationId(stationId);
     }
 
-    public Optional<RentInventory> getInventoryById(Long id) {
+    public Optional<RentInventory> getInventoryById(UUID id) {
         return Optional.of(inventoryRepository.getRentInventoryByInventoryId(id));
     }
 
-    public boolean isInventoryInRent(Long id) {
+    public boolean isInventoryInRent(UUID id) {
         return inventoryRepository.getRentInventoryByInventoryId(id).getAvailabilityStatus().getStatusId() == 2L;
     }
 }

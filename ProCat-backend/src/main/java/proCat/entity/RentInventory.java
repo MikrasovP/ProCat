@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -14,9 +15,10 @@ import java.util.Set;
 @Table(name = "rent_inventory")
 public class RentInventory {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "inventory_id", nullable = false)
-    private Long inventoryId;
+    private UUID inventoryId;
     @Column(name = "inventory_name", nullable = false)
     private String inventoryName;
     @Column(name = "path_to_img")
@@ -24,15 +26,15 @@ public class RentInventory {
     @Column(name = "price_per_hour")
     private BigDecimal pricePerHour;
     @ManyToOne()
-    @JoinColumn(name="type_id")
+    @JoinColumn(name = "type_id")
     @JsonIgnore
     private InventoryType inventoryType;
     @ManyToOne()
-    @JoinColumn(name="status_id")
+    @JoinColumn(name = "status_id")
     @JsonIgnore
     private AvailabilityStatus availabilityStatus;
     @ManyToOne()
-    @JoinColumn(name="station_id")
+    @JoinColumn(name = "station_id")
     @JsonIgnore
     private RentStation rentStation;
     @OneToMany(mappedBy = "rentInventory")
