@@ -42,7 +42,7 @@
                 tools:src="@drawable/test_bike" />
 
             <TextView
-                android:id="@+id/rent_station_name_tv"
+                android:id="@+id/rent_inventory_type_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -57,7 +57,7 @@
                 tools:text="Велосипед" />
 
             <TextView
-                android:id="@+id/tv_movie_card_date"
+                android:id="@+id/rent_inventory_name_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
@@ -70,7 +70,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/middle_vertical_divider"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rent_station_name_tv"
+                app:layout_constraintTop_toBottomOf="@id/rent_inventory_type_tv"
                 tools:text="Giant Talon" />
 
             <View
