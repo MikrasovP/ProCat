@@ -10,5 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Long countByPhoneNumber(String phoneNumber);
 
-    Optional<User> getUserByPhoneNumber(String phoneNumber);
+    Optional<User> getByPhoneNumber(String phoneNumber);
+
+    User getUserById(Long id);
 }

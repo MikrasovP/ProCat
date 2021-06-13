@@ -7,9 +7,12 @@ import org.springframework.stereotype.Repository;
 import proCat.entity.RentInventory;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface RentInventoryRepository extends JpaRepository<RentInventory, Long> {
+public interface RentInventoryRepository extends JpaRepository<RentInventory, UUID> {
     @Query(value = "select ri.* from rent_inventory ri where station_id=:station_id", nativeQuery = true)
     List<RentInventory> findAllByStationId(@Param("station_id") Long stationId);
+
+    RentInventory getRentInventoryByInventoryId(UUID id);
 }

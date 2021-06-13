@@ -52,5 +52,8 @@ public class JwtFilter extends GenericFilterBean {
         }
         return null;
     }
+    public String getSubjectFromToken(HttpServletRequest httpServletRequest){
+        return jwtSupplier.getClaimsFromToken(getTokenFromRequest(httpServletRequest)).getSubject();
+    }
 
 }

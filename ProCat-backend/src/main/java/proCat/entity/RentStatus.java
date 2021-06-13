@@ -1,8 +1,10 @@
 package proCat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -14,4 +16,7 @@ public class RentStatus {
     private Long statusId;
     @Column(name = "status_name", nullable = false)
     private String statusName;
+    @OneToMany(mappedBy = "rentStatus")
+    @JsonIgnore
+    private Set<Rent> rentSet;
 }

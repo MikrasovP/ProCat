@@ -6,4 +6,5 @@ import proCat.entity.AvailabilityStatus;
 
 @Repository
 public interface AvailabilityStatusRepository extends JpaRepository<AvailabilityStatus, Long> {
+    AvailabilityStatus getAvailabilityStatusByStatusId(Long status);
 }

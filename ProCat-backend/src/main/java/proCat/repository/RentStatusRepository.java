@@ -6,4 +6,5 @@ import proCat.entity.RentStatus;
 
 @Repository
 public interface RentStatusRepository extends JpaRepository<RentStatus, Long> {
+    RentStatus getRentStatusByStatusId(Long id);
 }
