@@ -3,7 +3,7 @@ package vsu.csf.procat.model
 import java.math.BigDecimal
 
 data class RentInventory(
-    val id: Long,
+    val uuid: String,
     val name: String,
     val typeName: String,
     val pathToImage: String,

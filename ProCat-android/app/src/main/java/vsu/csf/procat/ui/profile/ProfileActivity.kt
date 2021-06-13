@@ -1,17 +1,23 @@
 package vsu.csf.procat.ui.profile
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityProfileBinding
 import vsu.csf.procat.ui.auth.AuthActivity
+import vsu.csf.procat.ui.rentinventorydetail.RentInventoryDetailActivity
+import vsu.csf.procat.ui.scanner.ScannerActivity
 
 @AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
@@ -22,6 +28,8 @@ class ProfileActivity : AppCompatActivity() {
 
     private var isMenuVisible = false
 
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,6 +39,15 @@ class ProfileActivity : AppCompatActivity() {
         binding.vm = viewModel
 
         setSupportActionBar(binding.profileToolbar)
+
+        resultLauncher = this.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uuid = result.data?.extras?.getString(ScannerActivity.ITEM_UUID_RESULT_EXTRA)
+                uuid?.let {
+                    onUuidScanned(it)
+                } ?: Timber.e("Intent data is null but result is ok")
+            }
+        }
 
         viewModel.isAuthorized.observe(this) { isAuthorized ->
             isMenuVisible = isAuthorized
@@ -59,6 +76,14 @@ class ProfileActivity : AppCompatActivity() {
 
     fun openAuthActivity() {
         AuthActivity.start(this)
+    }
+
+    fun onScanButtonClick() {
+        ScannerActivity.startForResult(this, resultLauncher)
+    }
+
+    private fun onUuidScanned(uuid: String) {
+        RentInventoryDetailActivity.start(this, uuid)
     }
 
     companion object {

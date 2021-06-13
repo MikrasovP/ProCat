@@ -89,7 +89,6 @@ class RentInventoryListActivity : AppCompatActivity() {
 
     private fun onUuidScanned(uuid: String) {
         RentInventoryDetailActivity.start(this, uuid)
-        Toast.makeText(this, uuid, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
