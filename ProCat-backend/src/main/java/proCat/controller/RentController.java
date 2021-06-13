@@ -36,19 +36,18 @@ public class RentController {
     @PostMapping("/rent/start")
     public ResponseEntity<?> startRent(@RequestBody RentDto rentDto, HttpServletRequest httpServletRequest) {
         String userPhoneNumber = jwtFilter.getSubjectFromToken(httpServletRequest);
-        rentService.startRent(userPhoneNumber,rentDto.getInventoryId());
+        rentService.startRent(userPhoneNumber, rentDto.getInventoryId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/rent/inventory/{inventoryId}")
     public ResponseEntity<RentInventoryDTO> getInventoryByIdForRent(@PathVariable UUID inventoryId, HttpServletRequest httpServletRequest) {
-        String userPhoneNumber = jwtFilter.getSubjectFromToken(httpServletRequest);
-        return new ResponseEntity<>(rentService.getInventoryForRent(inventoryId,userPhoneNumber), HttpStatus.OK);
-//        if (rentService.isInventoryRentedByUser(inventoryId, userPhoneNumber) || !inventoryService.isInventoryInRent(inventoryId)) {
-//            RentInventoryDTO inventoryDTO = rentInventoryMapper.toRentInventoryDTO(inventoryService.getInventoryById(inventoryId).get());
-//            return new ResponseEntity<>(inventoryDTO, HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (jwtFilter.getTokenFromRequest(httpServletRequest) != null) {
+            String userPhoneNumber = jwtFilter.getSubjectFromToken(httpServletRequest);
+            return new ResponseEntity<>(rentService.getInventoryForRent(inventoryId, userPhoneNumber), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(rentInventoryMapper.toRentInventoryDTO(inventoryService.getInventoryById(inventoryId).get()), HttpStatus.OK);
+        }
     }
 
     @PostMapping("rent/stop")
