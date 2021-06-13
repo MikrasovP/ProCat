@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="activity"
+            type="vsu.csf.procat.ui.rentinventorylist.RentInventoryListActivity" />
+
+        <variable
             name="vm"
             type="vsu.csf.procat.ui.rentinventorylist.RentInventoryListViewModel" />
 
@@ -54,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:text="@string/scan_item"
+            android:onClick="@{() -> activity.onScanButtonClick()}"
             app:icon="@drawable/ic_qr_code_scanner_black_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
