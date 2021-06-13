@@ -33,6 +33,7 @@
             app:theme="@style/Theme.ProCat.AppBarOverlay" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_data"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:animateLayoutChanges="true"

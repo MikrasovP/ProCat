@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import vsu.csf.network.BuildConfig
@@ -30,9 +32,9 @@ class RentInventoryDetailActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.vm = viewModel
         binding.activity = this
-
         setSupportActionBar(binding.rentInventoryDetailToolbar)
 
+        observeItemDataLoaded()
         observeImagePath()
     }
 
@@ -46,6 +48,30 @@ class RentInventoryDetailActivity : AppCompatActivity() {
             R.id.profile_item -> ProfileActivity.start(this)
         }
         return true
+    }
+
+    private fun observeItemDataLoaded() {
+        viewModel.dataLoaded.observe(this) { loaded ->
+            if (loaded)
+                showItemsWithCrossfade()
+        }
+    }
+
+    private fun showItemsWithCrossfade() {
+        binding.itemData.apply {
+            alpha = 0f
+            visibility = View.VISIBLE
+            animate()
+                .setInterpolator(LinearOutSlowInInterpolator())
+                .alpha(1f)
+                .setDuration(CROSSFADE_ANIMATION_DURATION)
+                .setListener(null)
+        }
+        binding.progressBar.animate()
+            .alpha(0f)
+            .setInterpolator(LinearOutSlowInInterpolator())
+            .setDuration(CROSSFADE_ANIMATION_DURATION)
+            .setListener(null)
     }
 
     private fun observeImagePath() {
@@ -64,6 +90,8 @@ class RentInventoryDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val INVENTORY_ITEM_UUID_EXTRA = "inventory_item_uuid"
+
+        private const val CROSSFADE_ANIMATION_DURATION = 500L
 
         fun start(context: AppCompatActivity, itemUuid: String) {
             context.startActivity(
