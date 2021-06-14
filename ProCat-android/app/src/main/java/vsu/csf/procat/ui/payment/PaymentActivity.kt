@@ -23,7 +23,10 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payment)
-        binding
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
+        binding.activity = this
+        setSupportActionBar(binding.paymentToolbar)
 
         setUpPhoneMask()
     }

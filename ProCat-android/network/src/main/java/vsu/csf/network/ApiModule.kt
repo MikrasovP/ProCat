@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import vsu.csf.network.api.AuthApi
 import vsu.csf.network.api.DictionaryApi
+import vsu.csf.network.api.RentApi
 import vsu.csf.network.api.RentStationApi
 import javax.inject.Singleton
 
@@ -29,6 +30,11 @@ abstract class ApiModule {
         @Provides
         fun provideAuthApi(retrofit: Retrofit): AuthApi =
             retrofit.create(AuthApi::class.java)
+
+        @Singleton
+        @Provides
+        fun provideRentApi(retrofit: Retrofit): RentApi =
+            retrofit.create(RentApi::class.java)
 
     }
 }
