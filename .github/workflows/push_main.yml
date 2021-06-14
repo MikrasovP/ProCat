@@ -1,9 +1,9 @@
 on:
   push:
     branches:
-    - master
+    - main
     paths:
-    - "backend/**"
+    - "ProCat-backend/**"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,20 +15,20 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      working-directory: ./backend
+      working-directory: ./ProCat-backend
       run: mvn -B package --file pom.xml
     - name: Heroku Container Registry login
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      working-directory: ./backend
+      working-directory: ./ProCat-backend
       run: heroku container:login 
     - name: Build and push
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      working-directory: ./backend
+      working-directory: ./ProCat-backend
       run: heroku container:push -a ${{ secrets.HEROKU_BACKEND_APP_NAME }} web 
     - name: Release
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      working-directory: ./backend
+      working-directory: ./ProCat-backend
       run: heroku container:release -a ${{ secrets.HEROKU_BACKEND_APP_NAME }} web
