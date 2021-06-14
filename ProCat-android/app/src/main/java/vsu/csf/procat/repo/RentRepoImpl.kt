@@ -7,7 +7,7 @@ import retrofit2.HttpException
 import vsu.csf.network.api.RentApi
 import vsu.csf.network.model.rent.RentDtoModel
 import vsu.csf.network.model.rent.RentPaymentModel
-import vsu.csf.network.model.rent.RentStopModel
+import vsu.csf.procat.model.RentPauseDto
 import javax.inject.Inject
 
 class RentRepoImpl @Inject constructor(
@@ -18,8 +18,9 @@ class RentRepoImpl @Inject constructor(
         rentApi.startRent(RentDtoModel(itemUuid))
             .subscribeOn(Schedulers.io())
 
-    override fun pauseRent(itemUuid: String): Single<RentStopModel> =
+    override fun pauseRent(itemUuid: String): Single<RentPauseDto> =
         rentApi.stopRent(RentDtoModel(itemUuid))
+            .map { RentPauseDto.fromModel(it) }
             .subscribeOn(Schedulers.io())
 
     override fun payForRent(rentId: Long): Single<Boolean> =

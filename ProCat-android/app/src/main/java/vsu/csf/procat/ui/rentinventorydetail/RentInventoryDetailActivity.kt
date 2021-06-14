@@ -55,8 +55,7 @@ class RentInventoryDetailActivity : AppCompatActivity() {
                 }
             }
 
-        observeItemDataLoaded()
-        observeImagePath()
+        observeViewModelEvents()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,6 +76,13 @@ class RentInventoryDetailActivity : AppCompatActivity() {
 
     fun onFinishRentClicked() {
         viewModel.stopRent()
+    }
+
+    private fun observeViewModelEvents() {
+        observeItemDataLoaded()
+        observeImagePath()
+        observeRentStart()
+        observeRentPause()
     }
 
     private fun observeItemDataLoaded() {
@@ -117,15 +123,37 @@ class RentInventoryDetailActivity : AppCompatActivity() {
             .into(binding.inventoryIv)
     }
 
+    private fun observeRentStart() {
+        viewModel.rentStarted.observe(this) { started ->
+            if (started) {
+                Toast.makeText(applicationContext, R.string.rent_start_success, Toast.LENGTH_SHORT)
+                    .show()
+                ProfileActivity.start(this)
+                finish()
+            }
+        }
+    }
+
+    private fun observeRentPause() {
+        viewModel.rentStopped.observe(this) { rentPauseDto ->
+            if (rentPauseDto != null)
+                PaymentActivity.start(
+                    resultLauncher,
+                    this,
+                    rentPauseDto.amountToPay, rentPauseDto.rentId,
+                )
+        }
+    }
+
     private fun onPaymentSuccess() {
         Toast.makeText(applicationContext, getString(R.string.payment_success), Toast.LENGTH_LONG)
             .show()
-        ProfileActivity.start(applicationContext)
+        ProfileActivity.start(this)
         finish()
     }
 
     private fun onPaymentError() {
-        Toast.makeText(applicationContext, getString(R.string.payment_success), Toast.LENGTH_LONG)
+        Toast.makeText(applicationContext, getString(R.string.payment_error), Toast.LENGTH_LONG)
             .show()
         viewModel.retrieveItemData()
     }

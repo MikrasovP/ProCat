@@ -41,6 +41,7 @@
 
     <style name="item_detail_title">Просмотр снаряжения</style>
     <string name="start_rent">Начать аренду</string>
+    <string name="rent_start_success">Аренда началась.\nМожно пользоваться!</string>
     <string name="finish_rent">Завершить аренду</string>
     <string name="rent_payment_amount_title">К оплате:</string>
     <string name="payment_success">Оплата прошла успешно.\nСпасибо за использование ProCat!</string>

@@ -22,6 +22,10 @@ abstract class RepositoryModule {
 
     @ActivityRetainedScoped
     @Binds
+    abstract fun bindRentRepo(impl: RentRepoImpl): RentRepo
+
+    @ActivityRetainedScoped
+    @Binds
     abstract fun bindAuthRepo(impl: AuthRepoImpl): AuthRepo
 
 }

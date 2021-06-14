@@ -11,6 +11,7 @@ import retrofit2.HttpException
 import retrofit2.Response
 import vsu.csf.network.api.RentApi
 import vsu.csf.network.model.rent.RentStopModel
+import vsu.csf.procat.model.RentPauseDto
 import vsu.csf.procat.repo.RentRepoImpl
 import java.math.BigDecimal
 
@@ -45,7 +46,7 @@ class RentRepoTest {
             .test()
             .await()
         // Verify:
-            .assertResult(RENT_STOP_DTO)
+            .assertResult(RentPauseDto.fromModel(RENT_STOP_DTO))
     }
 
     @Test
