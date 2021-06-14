@@ -7,7 +7,6 @@ import vsu.csf.network.model.InventoryModel
 import vsu.csf.procat.model.RentInventory
 import vsu.csf.procat.model.RentStation
 import vsu.csf.procat.model.toDto
-import java.math.BigDecimal
 import javax.inject.Inject
 
 class RentStationsRepoImpl @Inject constructor(
@@ -30,15 +29,11 @@ class RentStationsRepoImpl @Inject constructor(
         rentStationApi.getStationInventory(rentStationId)
             .map { inventoryList ->
                 inventoryList.map {
-                    RentInventory(
-                        id = it.id,
-                        name = it.name,
-                        typeName = dictionaryRepo.getInventoryTypeById(it.typeId).blockingGet(),
-                        pathToImage = it.imageSrc,
-                        pricePerHour = it.pricePerHour,
-                        availabilityStatus =
-                        dictionaryRepo.getAvailabilityStatus(it.availabilityStatusId).blockingGet(),
-                    )
+                    dictionaryRepo.resolveRentInventory(it).blockingGet()
                 }
             }.subscribeOn(Schedulers.io())
+
+    override fun getRentInventoryByUuid(itemUuid: String): Single<InventoryModel> =
+        rentStationApi.getRentInventoryByUuid(itemUuid)
+            .subscribeOn(Schedulers.io())
 }

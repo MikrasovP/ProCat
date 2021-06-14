@@ -10,20 +10,19 @@ class UserAuthInterceptor @Inject constructor(
 ) : Interceptor {
 
     companion object {
-        const val AUTH_TOKEN_HEADER_NAME = "X-Auth-Token"
+        private const val AUTH_TOKEN_HEADER_NAME = "Authorization"
+        private const val AUTH_TOKEN_HEADER_BEARER = "Bearer "
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        var request: Request = chain.request()
-        val builder: Request.Builder = request.newBuilder()
+        val requestBuilder: Request.Builder = chain.request().newBuilder()
         val token = authHolder.authToken
 
         // Add auth token if we have one
         if (token.isNotBlank())
-            builder.header(AUTH_TOKEN_HEADER_NAME, token)
+            requestBuilder.header(AUTH_TOKEN_HEADER_NAME, AUTH_TOKEN_HEADER_BEARER + token)
 
-        request = builder.build()
-        return chain.proceed(request)
+        return chain.proceed(requestBuilder.build())
     }
 
 }

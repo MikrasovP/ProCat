@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="vsu.csf.procat">
 
-    <uses-sdk tools:overrideLibrary="       androidx.camera.camera2, androidx.camera.core,       androidx.camera.view, androidx.camera.lifecycle" />
+    <uses-sdk tools:overrideLibrary="
+        androidx.camera.camera2,
+        androidx.camera.core,
+        androidx.camera.view,
+        androidx.camera.lifecycle" />
 
     <uses-feature android:name="android.hardware.camera" />
 

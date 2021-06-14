@@ -39,5 +39,9 @@
     <string name="rent_item_hint">Для начала аренды отсканируйте qr-код на таком предмете</string>
     <string name="scanner_hint">Для начала аренды поместите в рамку QR-код, наклеенный на нужном вам предмете</string>
 
+    <string name="start_rent">Начать аренду</string>
+    <string name="finish_rent">Завершить аренду</string>
+    <string name="rent_unavailable_hint">К сожалению, сейчас аренда данного предмета недоступна.\nВы можете арендовать другой свободный предмет или попробовать позже</string>
+
     <string name="update_error">При обновлении данных произошла ошибка</string>
 </resources>

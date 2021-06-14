@@ -5,7 +5,7 @@ import java.math.BigDecimal
 
 data class InventoryModel(
     @SerializedName("inventoryId")
-    val id: Long,
+    val uuid: String,
     @SerializedName("inventoryName")
     val name: String,
     @SerializedName("typeId")
