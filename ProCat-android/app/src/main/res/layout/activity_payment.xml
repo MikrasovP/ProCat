@@ -31,75 +31,224 @@
             app:theme="@style/Theme.ProCat.AppBarOverlay"
             app:title="@string/payment_title" />
 
-        <TextView
-            android:id="@+id/payment_hint_tv"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginHorizontal="12dp"
-            android:fontFamily="@font/montserrat"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:text="@string/payment_hint"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/payment_toolbar"/>
+            android:layout_height="0dp"
+            android:visibility="@{vm.payWaiting ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment_toolbar"
+            tools:visibility="gone">
 
-        <TextView
-            android:id="@+id/payment_amount_hint_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/montserrat"
-            android:textSize="22sp"
-            android:textColor="@color/black"
-            android:text="@string/payment_amount_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/payment_hint_tv"/>
-        
-        <TextView
-            android:id="@+id/payment_amount_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:fontFamily="@font/montserrat"
-            android:textSize="26sp"
-            android:textColor="@color/black"
-            android:text="@{vm.payAmountString}"
-            app:layout_constraintTop_toBottomOf="@id/payment_amount_hint_tv"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="125.00 рублей"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/credit_card_et_layout"
-            style="@style/Theme.ProCat.TextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:hint="@string/credit_card_title"
-            app:errorEnabled="@{vm.creditCardError}"
-            app:errorText="@{vm.creditCardError ? @string/credit_card_error : null}"
-            app:layout_constraintTop_toBottomOf="@id/payment_amount_tv">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/credit_card_et"
+            <TextView
+                android:id="@+id/payment_hint_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="1234567890 "
-                android:inputType="number"
-                android:autofillHints="creditCardNumber"
-                android:lines="1"/>
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/payment_hint"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/payment_amount_hint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/payment_amount_title"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payment_hint_tv" />
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/payment_amount_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@{vm.payAmountString}"
+                android:textColor="@color/black"
+                android:textSize="26sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payment_amount_hint_tv"
+                tools:text="125.00 рублей" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/credit_card_et_layout"
+                style="@style/Theme.ProCat.TextField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:hint="@string/credit_card_title"
+                app:errorEnabled="@{vm.creditCardError}"
+                app:errorText="@{vm.creditCardError ? @string/credit_card_error : null}"
+                app:layout_constraintTop_toBottomOf="@id/payment_amount_tv">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/credit_card_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="creditCardNumber"
+                    android:digits="1234567890 "
+                    android:inputType="number"
+                    android:lines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:onClick="@{() -> vm.onPayClick()}"
+                android:text="@string/payment_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_margin="12dp"
-            android:text="@string/payment_button"
+            android:layout_height="0dp"
+            android:visibility="@{vm.paySuccess ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/payment_toolbar">
+
+            <TextView
+                android:id="@+id/payment_success_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/payment_success"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/payment_success_amount_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/payment_success_amount"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/payment_success_tv" />
+
+            <TextView
+                android:id="@+id/payment_success_amount_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@{vm.payAmountString}"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payment_success_amount_title_tv"
+                tools:text="125.00 рублей" />
+
+            <TextView
+                android:id="@+id/payment_success_credit_card_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/payment_success_credit_card"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/payment_success_amount_tv" />
+
+            <TextView
+                android:id="@+id/payment_success_credit_card_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@{vm.creditCardNumber}"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payment_success_credit_card_title_tv"
+                tools:text="1234 5678 1234 5678" />
+
+            <TextView
+                android:id="@+id/payment_success_time_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/payment_success_time"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/payment_success_credit_card_tv" />
+
+            <TextView
+                android:id="@+id/payment_success_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@{vm.paymentTimeString}"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payment_success_time_title_tv"
+                tools:text="28 мая 2021 21:44:13" />
+
+            <TextView
+                android:id="@+id/payment_success_id_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/payment_success_rent_id"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/payment_success_time_tv" />
+
+            <TextView
+                android:id="@+id/payment_success_id_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:fontFamily="@font/montserrat"
+                android:text="@{vm.rentId.toString()}"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payment_success_id_title_tv"
+                tools:text="869287234884151831687" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:onClick="@{() -> activity.onFinishPaymentClick()}"
+                android:text="@string/finish_rent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="@{vm.loading ? View.VISIBLE : View.GONE}"
+            app:indicatorColor="@color/accent_teal"
+            app:layout_constraintTop_toBottomOf="@id/payment_toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

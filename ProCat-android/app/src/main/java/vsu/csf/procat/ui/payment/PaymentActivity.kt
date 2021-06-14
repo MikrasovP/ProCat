@@ -3,6 +3,7 @@ package vsu.csf.procat.ui.payment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import com.redmadrobot.inputmask.MaskedTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityPaymentBinding
+import vsu.csf.procat.ui.profile.ProfileActivity
 import java.math.BigDecimal
 
 @AndroidEntryPoint
@@ -28,7 +30,32 @@ class PaymentActivity : AppCompatActivity() {
         binding.activity = this
         setSupportActionBar(binding.paymentToolbar)
 
+        val payAmount: BigDecimal = intent?.extras?.getSerializable(PAY_AMOUNT_EXTRA) as BigDecimal
+        val rentId = intent?.extras?.getLong(RENT_ID_EXTRA)
+        viewModel.onCreate(payAmount, rentId)
+
         setUpPhoneMask()
+        observeNetworkError()
+        observePaymentError()
+    }
+
+    fun onFinishPaymentClick() {
+        ProfileActivity.start(this)
+        finish()
+    }
+
+    private fun observeNetworkError() {
+        viewModel.networkError.observe(this) { error ->
+            if(error == true)
+                Toast.makeText(this, R.string.network_error, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun observePaymentError() {
+        viewModel.payError.observe(this) { error ->
+            if(error == true)
+                Toast.makeText(applicationContext, R.string.payment_error, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setUpPhoneMask() {

@@ -44,14 +44,19 @@
     <string name="rent_start_success">Аренда началась.\nМожно пользоваться!</string>
     <string name="finish_rent">Завершить аренду</string>
     <string name="rent_payment_amount_title">К оплате:</string>
-    <string name="payment_success">Оплата прошла успешно.\nСпасибо за использование ProCat!</string>
     <string name="payment_error">Во время оплаты произошла ошибка.\nПопробуйте повторить оплату</string>
     <string name="rent_unavailable_hint">К сожалению, сейчас аренда данного предмета недоступна.\nВы можете арендовать другой свободный предмет или попробовать позже</string>
 
     <string name="payment_title">Оплата</string>
     <string name="payment_amount_title">К оплате:</string>
     <string name="payment_hint">Аренда приостановлена, цена заморожена.\nПожалуйста, оплатите аренду в течение 12 минут, иначе цена может увеличиться</string>
+    <string name="payment_success">Оплата прошла успешно.\nСпасибо за использование ProCat!</string>
+    <string name="payment_success_amount">Сумма платежа:</string>
+    <string name="payment_success_credit_card">Номер банковской карты:</string>
+    <string name="payment_success_time">Время проведения платежа:</string>
+    <string name="payment_success_rent_id">Служебный идентификатор аренды:</string>
     <string name="payment_button">Оплатить</string>
+    <string name="payment_button_finish">Вернуться в профиль</string>
     <string name="credit_card_title">Номер банковской карты</string>
     <string name="credit_card_error">Проверьте правильность номера банковской карты</string>
 
