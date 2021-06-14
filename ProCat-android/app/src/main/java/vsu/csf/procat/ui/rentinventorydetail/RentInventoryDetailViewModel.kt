@@ -44,7 +44,7 @@ class RentInventoryDetailViewModel @Inject constructor(
         retrieveItemData()
     }
 
-    private fun retrieveItemData() {
+    fun retrieveItemData() {
         if (!::itemUuid.isInitialized) {
             Timber.e("Attempt to get item with unknown id")
             return
@@ -66,6 +66,14 @@ class RentInventoryDetailViewModel @Inject constructor(
                 error.value = true
                 loading.value = false
             })
+    }
+
+    fun startRent() {
+
+    }
+
+    fun stopRent() {
+
     }
 
     private fun setUpItemData(rentInventory: RentInventory) {

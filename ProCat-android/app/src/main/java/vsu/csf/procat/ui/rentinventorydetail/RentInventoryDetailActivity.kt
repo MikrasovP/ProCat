@@ -1,19 +1,25 @@
 package vsu.csf.procat.ui.rentinventorydetail
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import vsu.csf.network.BuildConfig
 import vsu.csf.procat.R
 import vsu.csf.procat.databinding.ActivityRentInventoryDetailBinding
+import vsu.csf.procat.ui.payment.PaymentActivity
 import vsu.csf.procat.ui.profile.ProfileActivity
 
 @AndroidEntryPoint
@@ -22,6 +28,8 @@ class RentInventoryDetailActivity : AppCompatActivity() {
     private val viewModel: RentInventoryDetailViewModel by viewModels()
 
     private lateinit var binding: ActivityRentInventoryDetailBinding
+
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +41,19 @@ class RentInventoryDetailActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.activity = this
         setSupportActionBar(binding.rentInventoryDetailToolbar)
+
+        resultLauncher =
+            this.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    when (result.data?.extras?.getBoolean(PaymentActivity.PAYMENT_SUCCESS_EXTRA)) {
+                        true -> onPaymentSuccess()
+                        false -> onPaymentError()
+                        else -> {
+                            Timber.e("Intent data is null but result is ok")
+                        }
+                    }
+                }
+            }
 
         observeItemDataLoaded()
         observeImagePath()
@@ -48,6 +69,14 @@ class RentInventoryDetailActivity : AppCompatActivity() {
             R.id.profile_item -> ProfileActivity.start(this)
         }
         return true
+    }
+
+    fun onStartRentClicked() {
+        viewModel.startRent()
+    }
+
+    fun onFinishRentClicked() {
+        viewModel.stopRent()
     }
 
     private fun observeItemDataLoaded() {
@@ -86,6 +115,19 @@ class RentInventoryDetailActivity : AppCompatActivity() {
             .load(BuildConfig.IMAGE_SERVER_URL + imagePath)
             .centerCrop()
             .into(binding.inventoryIv)
+    }
+
+    private fun onPaymentSuccess() {
+        Toast.makeText(applicationContext, getString(R.string.payment_success), Toast.LENGTH_LONG)
+            .show()
+        ProfileActivity.start(applicationContext)
+        finish()
+    }
+
+    private fun onPaymentError() {
+        Toast.makeText(applicationContext, getString(R.string.payment_success), Toast.LENGTH_LONG)
+            .show()
+        viewModel.retrieveItemData()
     }
 
     companion object {

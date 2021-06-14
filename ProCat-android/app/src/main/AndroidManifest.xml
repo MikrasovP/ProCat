@@ -40,6 +40,7 @@
         <activity android:name=".ui.auth.AuthActivity" />
         <activity android:name=".ui.scanner.ScannerActivity" />
         <activity android:name=".ui.rentinventorydetail.RentInventoryDetailActivity" />
+        <activity android:name=".ui.payment.PaymentActivity" />
     </application>
 
 </manifest>

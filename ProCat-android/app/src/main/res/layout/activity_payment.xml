@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="activity"
+            type="vsu.csf.procat.ui.payment.PaymentActivity" />
+
+        <variable
+            name="vm"
+            type="vsu.csf.procat.ui.payment.PaymentViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/payment_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_logout_toolbar"
+            app:popupTheme="@style/Theme.ProCat.PopupOverlay"
+            app:theme="@style/Theme.ProCat.AppBarOverlay"
+            app:title="@string/payment_title" />
+
+        <TextView
+            android:id="@+id/payment_hint_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="12dp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="@string/payment_hint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment_toolbar"/>
+
+        <TextView
+            android:id="@+id/payment_amount_hint_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:text="@string/payment_amount_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment_hint_tv"/>
+        
+        <TextView
+            android:id="@+id/payment_amount_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="26sp"
+            android:textColor="@color/black"
+            android:text="@{vm.payAmountString}"
+            app:layout_constraintTop_toBottomOf="@id/payment_amount_hint_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="125.00 рублей"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/credit_card_et_layout"
+            style="@style/Theme.ProCat.TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:hint="@string/credit_card_title"
+            app:errorEnabled="@{vm.creditCardError}"
+            app:errorText="@{vm.creditCardError ? @string/credit_card_error : null}"
+            app:layout_constraintTop_toBottomOf="@id/payment_amount_tv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/credit_card_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="1234567890 "
+                android:inputType="number"
+                android:autofillHints="creditCardNumber"
+                android:lines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="12dp"
+            android:text="@string/payment_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
