@@ -1,10 +1,7 @@
 package proCat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -30,13 +27,16 @@ public class Rent {
     @ManyToOne()
     @JoinColumn(name = "user_id")
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private User user;
     @ManyToOne()
     @JoinColumn(name = "status_id")
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private RentStatus rentStatus;
     @ManyToOne()
     @JoinColumn(name = "inventory_id")
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private RentInventory rentInventory;
 }
