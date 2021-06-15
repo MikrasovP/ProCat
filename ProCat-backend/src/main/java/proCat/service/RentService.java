@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service
 public class RentService {
-    private static final Long WAITING_FOR_PAY = 120000L;
+    private static final Long WAITING_FOR_PAY = 180000L;
     private final RentRepository rentRepository;
     private final UserRepository userRepository;
     private final RentInventoryRepository inventoryRepository;
@@ -76,11 +76,11 @@ public class RentService {
 
     public void payForRent(Long rentId) throws PaymentTimeOutException {
         Rent rent = rentRepository.getByRentId(rentId);
-        if (ChronoUnit.MILLIS.between(LocalDateTime.now(), rent.getEndTime()) > WAITING_FOR_PAY) {
+        if (ChronoUnit.MILLIS.between(rent.getEndTime(), LocalDateTime.now()) > WAITING_FOR_PAY) {
             throw new PaymentTimeOutException("Expired payment time");
         } else {
             //симуляция задержки при оплате
-            long range = 5000;
+            long range = 3000;
             long startTime = System.currentTimeMillis();
             while (System.currentTimeMillis() - startTime < range) {
             }
@@ -106,7 +106,7 @@ public class RentService {
 
     public RentInventoryDTO getInventoryForRent(UUID inventoryId, String userPhoneNumber) {
         RentInventoryDTO inventoryDTO = rentInventoryMapper.toRentInventoryDTO(rentInventoryService.getInventoryById(inventoryId).get());
-        if (!isInventoryRentedByUser(inventoryId, userPhoneNumber)&& rentInventoryService.isInventoryInRent(inventoryId)) {
+        if (!isInventoryRentedByUser(inventoryId, userPhoneNumber) && rentInventoryService.isInventoryInRent(inventoryId)) {
             inventoryDTO.setStatusId(3L);
         }
         return inventoryDTO;

@@ -36,7 +36,7 @@ public class RentServiceTest {
     public void payForRentTimeOut() {
         Rent rent = new Rent();
         rent.setRentId(1L);
-        rent.setEndTime(LocalDateTime.now().plusMinutes(12).plusSeconds(1));
+        rent.setEndTime(LocalDateTime.now().minusSeconds(180));
         Mockito.doReturn(rent).when(rentRepository).getByRentId(1L);
         assertThrows(PaymentTimeOutException.class,()->{rentService.payForRent(1L);});
     }
