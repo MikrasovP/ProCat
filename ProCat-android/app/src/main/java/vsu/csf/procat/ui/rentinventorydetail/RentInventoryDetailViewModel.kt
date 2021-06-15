@@ -1,5 +1,6 @@
 package vsu.csf.procat.ui.rentinventorydetail
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -7,15 +8,20 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import vsu.csf.procat.model.RentInventory
+import vsu.csf.procat.model.RentPauseDto
 import vsu.csf.procat.repo.DictionariesRepo
+import vsu.csf.procat.repo.RentRepo
 import vsu.csf.procat.repo.RentStationsRepo
+import vsu.csf.procat.utils.AuthHolderImpl
 import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
 class RentInventoryDetailViewModel @Inject constructor(
+    private val rentRepo: RentRepo,
     private val rentStationsRepo: RentStationsRepo,
     private val dictionariesRepo: DictionariesRepo,
+    private val authHolderImpl: AuthHolderImpl,
 ) : ViewModel() {
 
     private lateinit var itemUuid: String
@@ -35,16 +41,35 @@ class RentInventoryDetailViewModel @Inject constructor(
     val error = MutableLiveData(false)
     val loading = MutableLiveData(false)
 
+    val rentStarted = MutableLiveData(false)
+    val rentStopped = MutableLiveData<RentPauseDto?>()
+    val authRequest = MutableLiveData(false)
+
+    private val rentStartLoading = MutableLiveData(false)
+    private val rentStopLoading = MutableLiveData(false)
+    val rentStatusLoading = MediatorLiveData<Boolean>().apply {
+        value = false
+        addSource(rentStartLoading) {
+            value = rentStartLoading.value == true || rentStopLoading.value == true
+        }
+        addSource(rentStopLoading) {
+            value = rentStartLoading.value == true || rentStopLoading.value == true
+        }
+    }
+
     fun setItemUuid(itemUuid: String?) {
         if (itemUuid == null) {
             Timber.i("Item uuid is null")
             return
         }
         this.itemUuid = itemUuid
+        rentStarted.value = false
+        rentStopped.value = null
+        authRequest.value = false
         retrieveItemData()
     }
 
-    private fun retrieveItemData() {
+    fun retrieveItemData() {
         if (!::itemUuid.isInitialized) {
             Timber.e("Attempt to get item with unknown id")
             return
@@ -65,6 +90,42 @@ class RentInventoryDetailViewModel @Inject constructor(
                 Timber.e(ex, "Error while retrieving item data, id: $itemUuid")
                 error.value = true
                 loading.value = false
+            })
+    }
+
+    fun startRent() {
+        if (authHolderImpl.isAuthorized()){
+            authRequest.value = false
+            rentStartLoading.value = true
+            rentRepo.startRent(itemUuid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    rentStarted.value = true
+                    rentStartLoading.value = false
+                    error.value = false
+                }, { ex ->
+                    Timber.e(ex, "Error while starting rent, uuid: $itemUuid")
+                    error.value = true
+                    rentStartLoading.value = false
+                })
+        } else {
+            authRequest.value = true
+        }
+    }
+
+
+    fun stopRent() {
+        rentStopLoading.value = true
+        rentRepo.pauseRent(itemUuid)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                rentStopped.value = it
+                rentStopLoading.value = false
+                error.value = false
+            }, { ex ->
+                Timber.e(ex, "Error while pausing rent, uuid: $itemUuid")
+                error.value = true
+                rentStopLoading.value = false
             })
     }
 
