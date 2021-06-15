@@ -105,6 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
+                android:enabled="@{vm.loading ? false : true}"
                 android:onClick="@{() -> vm.onPayClick()}"
                 android:text="@string/payment_button"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -236,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:onClick="@{() -> activity.onFinishPaymentClick()}"
-                android:text="@string/finish_rent"
+                android:text="@string/payment_button_finish"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

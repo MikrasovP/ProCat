@@ -70,19 +70,12 @@ class RentInventoryDetailActivity : AppCompatActivity() {
         return true
     }
 
-    fun onStartRentClicked() {
-        viewModel.startRent()
-    }
-
-    fun onFinishRentClicked() {
-        viewModel.stopRent()
-    }
-
     private fun observeViewModelEvents() {
         observeItemDataLoaded()
         observeImagePath()
         observeRentStart()
         observeRentPause()
+        observeAuthRequest()
     }
 
     private fun observeItemDataLoaded() {
@@ -142,6 +135,16 @@ class RentInventoryDetailActivity : AppCompatActivity() {
                     this,
                     rentPauseDto.amountToPay, rentPauseDto.rentId,
                 )
+        }
+    }
+
+    private fun observeAuthRequest() {
+        viewModel.authRequest.observe(this) { authRequest ->
+            if (authRequest == true) {
+                Toast.makeText(applicationContext, R.string.rent_auth_request, Toast.LENGTH_SHORT)
+                    .show()
+                ProfileActivity.start(this)
+            }
         }
     }
 

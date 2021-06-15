@@ -12,6 +12,7 @@ import vsu.csf.procat.model.RentPauseDto
 import vsu.csf.procat.repo.DictionariesRepo
 import vsu.csf.procat.repo.RentRepo
 import vsu.csf.procat.repo.RentStationsRepo
+import vsu.csf.procat.utils.AuthHolderImpl
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -20,6 +21,7 @@ class RentInventoryDetailViewModel @Inject constructor(
     private val rentRepo: RentRepo,
     private val rentStationsRepo: RentStationsRepo,
     private val dictionariesRepo: DictionariesRepo,
+    private val authHolderImpl: AuthHolderImpl,
 ) : ViewModel() {
 
     private lateinit var itemUuid: String
@@ -41,6 +43,7 @@ class RentInventoryDetailViewModel @Inject constructor(
 
     val rentStarted = MutableLiveData(false)
     val rentStopped = MutableLiveData<RentPauseDto?>()
+    val authRequest = MutableLiveData(false)
 
     private val rentStartLoading = MutableLiveData(false)
     private val rentStopLoading = MutableLiveData(false)
@@ -62,6 +65,7 @@ class RentInventoryDetailViewModel @Inject constructor(
         this.itemUuid = itemUuid
         rentStarted.value = false
         rentStopped.value = null
+        authRequest.value = false
         retrieveItemData()
     }
 
@@ -90,18 +94,23 @@ class RentInventoryDetailViewModel @Inject constructor(
     }
 
     fun startRent() {
-        rentStartLoading.value = true
-        rentRepo.startRent(itemUuid)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                rentStarted.value = true
-                rentStartLoading.value = false
-                error.value = false
-            }, { ex ->
-                Timber.e(ex, "Error while starting rent, uuid^ $itemUuid")
-                error.value = true
-                rentStartLoading.value = false
-            })
+        if (authHolderImpl.isAuthorized()){
+            authRequest.value = false
+            rentStartLoading.value = true
+            rentRepo.startRent(itemUuid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    rentStarted.value = true
+                    rentStartLoading.value = false
+                    error.value = false
+                }, { ex ->
+                    Timber.e(ex, "Error while starting rent, uuid: $itemUuid")
+                    error.value = true
+                    rentStartLoading.value = false
+                })
+        } else {
+            authRequest.value = true
+        }
     }
 
 

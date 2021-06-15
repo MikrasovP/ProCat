@@ -65,11 +65,10 @@ class PaymentViewModel @Inject constructor(
             rentRepo.payForRent(it)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ success ->
-                    if (success){
+                    if (success) {
                         paySuccess.value = true
                         paymentTimeString.value = formatCurrentTime()
-                    }
-                    else
+                    } else
                         payError.value = false
                     loading.value = false
                     networkError.value = false

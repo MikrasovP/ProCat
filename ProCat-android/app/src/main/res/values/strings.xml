@@ -38,6 +38,7 @@
 
     <string name="rent_item_hint">Для начала аренды отсканируйте qr-код на таком предмете</string>
     <string name="scanner_hint">Для начала аренды поместите в рамку QR-код, наклеенный на нужном вам предмете</string>
+    <string name="rent_auth_request">Пожалуйста, войдите в учетную запись для начала аренды</string>
 
     <style name="item_detail_title">Просмотр снаряжения</style>
     <string name="start_rent">Начать аренду</string>
