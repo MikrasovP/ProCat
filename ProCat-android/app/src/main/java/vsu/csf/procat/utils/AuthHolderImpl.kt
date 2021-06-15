@@ -24,6 +24,8 @@ class AuthHolderImpl @Inject constructor(
             .subscribe({ }, { ex -> Timber.e(ex, "Error while reading user data") })
     }
 
+    fun isAuthorized() = authToken.isNotBlank()
+
     private fun updateUserData(): Completable {
         val tokenCompletable = sharedPrefsRepo.getAuthToken()
             .doOnSuccess { authToken = it }

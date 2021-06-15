@@ -139,6 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
+            android:onClick="@{() -> activity.onScanButtonClick()}"
             android:text="@string/scan_item"
             app:icon="@drawable/ic_qr_code_scanner_black_24"
             app:layout_constraintBottom_toBottomOf="parent"

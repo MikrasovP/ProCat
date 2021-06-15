@@ -43,7 +43,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
 
-            buildConfigField "String", "SERVER_URL", "\"http://procat-app.herokuapp.com/\""
+            buildConfigField "String", "SERVER_URL", "\"https://procat-app.herokuapp.com/\""
             buildConfigField "String", "IMAGE_SERVER_URL", "\"https://res.cloudinary.com/procat/image/upload/v1620070827/\""
 
             debuggable true
@@ -72,13 +72,13 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.core:core-ktx:1.5.0'
 
     // RxJava
     implementation 'io.reactivex.rxjava3:rxjava:3.0.10'
 
     // Dagger
-    ext.dagger_version = '2.33'
+    ext.dagger_version = '2.35.1'
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 

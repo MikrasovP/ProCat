@@ -5,12 +5,11 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import vsu.csf.network.api.DictionaryApi
-import vsu.csf.network.model.dictionary.AvailabilityStatusModel
-import vsu.csf.network.model.dictionary.InventoryTypeModel
-import vsu.csf.network.model.dictionary.RentStatusModel
+import vsu.csf.network.model.InventoryModel
 import vsu.csf.procat.database.dao.AvailabilityStatusDao
 import vsu.csf.procat.database.dao.InventoryTypeDao
 import vsu.csf.procat.database.dao.RentStatusDao
+import vsu.csf.procat.model.RentInventory
 import vsu.csf.procat.model.toEntity
 import javax.inject.Inject
 
@@ -56,6 +55,22 @@ class DictionariesRepoImpl @Inject constructor(
     override fun getRentStatusesList(): Single<List<String>> =
         rentStatusDao.getRentStatusesNames()
             .subscribeOn(Schedulers.io())
+
+    override fun resolveRentInventory(inventoryModel: InventoryModel): Single<RentInventory> =
+        Single.fromCallable {
+            val typeName = getInventoryTypeById(inventoryModel.typeId)
+                .blockingGet()
+            val availabilityStatus = getAvailabilityStatus(inventoryModel.availabilityStatusId)
+                .blockingGet()
+            RentInventory(
+                uuid = inventoryModel.uuid,
+                name = inventoryModel.name,
+                typeName = typeName,
+                pathToImage = inventoryModel.imageSrc,
+                pricePerHour = inventoryModel.pricePerHour,
+                availabilityStatus = availabilityStatus,
+            )
+        }.subscribeOn(Schedulers.io())
 
     private fun updateAvailabilityStatuses(): Completable =
         dictionaryApi.getAvailabilityStatuses()

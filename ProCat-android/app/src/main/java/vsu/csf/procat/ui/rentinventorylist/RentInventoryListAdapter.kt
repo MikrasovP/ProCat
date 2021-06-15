@@ -69,7 +69,7 @@ class RentInventoryListAdapter(
     ) : DiffUtil.Callback() {
 
         override fun areItemsTheSame(oldPos: Int, newPos: Int): Boolean =
-            oldList[oldPos].id == newList[newPos].id
+            oldList[oldPos].uuid == newList[newPos].uuid
 
         override fun areContentsTheSame(oldPos: Int, newPos: Int): Boolean {
             return (oldList[oldPos].name == newList[newPos].name &&

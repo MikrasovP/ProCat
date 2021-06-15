@@ -14,4 +14,7 @@ interface RentStationApi {
     @GET("/station/{id}/inventory")
     fun getStationInventory(@Path("id") stationId: Long): Single<List<InventoryModel>>
 
+    @GET("/rent/inventory/{inventoryId}")
+    fun getRentInventoryByUuid(@Path("inventoryId") itemUuid: String): Single<InventoryModel>
+
 }
