@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service
 public class RentService {
-    private static final Long WAITING_FOR_PAY = 1200000L;
+    private static final Long WAITING_FOR_PAY = 120000L;
     private final RentRepository rentRepository;
     private final UserRepository userRepository;
     private final RentInventoryRepository inventoryRepository;

@@ -1,21 +1,20 @@
 package proCat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "rent_inventory")
 public class RentInventory {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue
     @Column(name = "inventory_id", nullable = false)
     private UUID inventoryId;
@@ -28,16 +27,20 @@ public class RentInventory {
     @ManyToOne()
     @JoinColumn(name = "type_id")
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private InventoryType inventoryType;
     @ManyToOne()
     @JoinColumn(name = "status_id")
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private AvailabilityStatus availabilityStatus;
     @ManyToOne()
     @JoinColumn(name = "station_id")
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private RentStation rentStation;
     @OneToMany(mappedBy = "rentInventory")
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private Set<Rent> rentSet;
 }

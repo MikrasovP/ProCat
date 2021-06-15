@@ -2,6 +2,9 @@ package proCat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,5 +25,6 @@ public class User {
     private String email;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private Set<Rent> rentSet;
 }
