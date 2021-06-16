@@ -106,7 +106,7 @@ public class RentService {
 
     public RentInventoryDTO getInventoryForRent(UUID inventoryId, String userPhoneNumber) {
         RentInventoryDTO inventoryDTO = rentInventoryMapper.toRentInventoryDTO(rentInventoryService.getInventoryById(inventoryId).get());
-        if (!isInventoryRentedByUser(inventoryId, userPhoneNumber) && rentInventoryService.isInventoryInRent(inventoryId)) {
+        if (rentInventoryService.isInventoryInRent(inventoryId) && !isInventoryRentedByUser(inventoryId, userPhoneNumber)) {
             inventoryDTO.setStatusId(3L);
         }
         return inventoryDTO;
