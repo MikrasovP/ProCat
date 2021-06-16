@@ -4,6 +4,7 @@ import vsu.csf.network.model.RentStationModel
 import vsu.csf.network.model.dictionary.AvailabilityStatusModel
 import vsu.csf.network.model.dictionary.InventoryTypeModel
 import vsu.csf.network.model.dictionary.RentStatusModel
+import vsu.csf.network.model.rent.RentStopModel
 import vsu.csf.procat.database.entity.AvailabilityStatus
 import vsu.csf.procat.database.entity.InventoryType
 import vsu.csf.procat.database.entity.RentStatus
@@ -29,4 +30,9 @@ fun RentStationModel.toDto() = RentStation(
     address = address,
     latitude = latitude,
     longitude = longitude,
+)
+
+fun RentStopModel.toDto() = RentPauseDto(
+    amountToPay,
+    rentId,
 )

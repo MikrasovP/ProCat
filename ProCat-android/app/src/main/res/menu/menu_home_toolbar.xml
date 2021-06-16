@@ -8,10 +8,4 @@
         android:title="@string/toolbar_home_title"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/logout_item"
-        android:icon="@drawable/ic_logout_white_24"
-        android:title="@string/logout"
-        app:showAsAction="ifRoom" />
-
 </menu>

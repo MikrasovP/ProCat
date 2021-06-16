@@ -125,7 +125,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // Input Mask
-    implementation 'com.redmadrobot:input-mask-android:6.0.0'
+    implementation 'com.github.RedMadRobot:input-mask-android:6.0.0'
 
     // Barcode Scanner
     implementation 'com.google.mlkit:barcode-scanning:16.1.2'
