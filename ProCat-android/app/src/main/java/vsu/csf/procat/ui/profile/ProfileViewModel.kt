@@ -32,6 +32,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     val currentRentInventoryList = MutableLiveData(listOf<CurrentRentInventoryDto>())
+    val loading = MutableLiveData(false)
+    val networkError = MutableLiveData(false)
 
     fun updateAuthStatus() {
         isAuthorized.value = authHolderImpl.authToken.isNotBlank()
@@ -43,11 +45,16 @@ class ProfileViewModel @Inject constructor(
             currentRentInventoryList.value = listOf()
             return
         }
+        loading.value = true
         rentRepo.getCurrentRentItems()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ items ->
                 currentRentInventoryList.value = items
+                loading.value = false
+                networkError.value = false
             }, { ex ->
+                loading.value = false
+                networkError.value = true
                 Timber.e(ex, "Error while retrieving current rent list")
             })
     }

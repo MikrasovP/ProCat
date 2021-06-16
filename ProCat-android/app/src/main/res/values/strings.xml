@@ -31,6 +31,7 @@
 
     <string name="toolbar_profile_action">Профиль</string>
     <string name="toolbar_profile_title">Профиль</string>
+    <string name="toolbar_home_title">Вернуться к списку точек проката</string>
     <string name="auth_promo">Для начала аренды войдите или зарегистрируйтесь</string>
     <string name="profile_username">Добро пожаловать,\n%s</string>
     <string name="profile_pay_amount_title">К оплате:</string>
