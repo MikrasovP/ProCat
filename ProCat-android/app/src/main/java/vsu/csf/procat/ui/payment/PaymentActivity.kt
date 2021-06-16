@@ -46,15 +46,17 @@ class PaymentActivity : AppCompatActivity() {
 
     private fun observeNetworkError() {
         viewModel.networkError.observe(this) { error ->
-            if(error == true)
+            if (error == true)
                 Toast.makeText(this, R.string.network_error, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun observePaymentError() {
         viewModel.payError.observe(this) { error ->
-            if(error == true)
+            if (error == true) {
                 Toast.makeText(applicationContext, R.string.payment_error, Toast.LENGTH_LONG).show()
+                finish()
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -13,8 +14,8 @@ android {
         applicationId "vsu.csf.procat"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "0.1.1"
+        versionCode 3
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -124,7 +125,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // Input Mask
-    implementation 'com.redmadrobot:input-mask-android:6.0.0'
+    implementation 'com.github.RedMadRobot:input-mask-android:6.0.0'
 
     // Barcode Scanner
     implementation 'com.google.mlkit:barcode-scanning:16.1.2'
@@ -133,6 +134,10 @@ dependencies {
     implementation "androidx.camera:camera-camera2:1.0.0"
     implementation "androidx.camera:camera-lifecycle:1.0.0"
     implementation "androidx.camera:camera-view:1.0.0-alpha25"
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:28.1.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "io.mockk:mockk:1.10.4"

@@ -43,6 +43,7 @@ class PaymentViewModel @Inject constructor(
             return
         this.payAmount.value = payAmount
         this.rentId.value = rentId
+        payError.value = false
     }
 
     fun onPayClick() {
@@ -69,7 +70,7 @@ class PaymentViewModel @Inject constructor(
                         paySuccess.value = true
                         paymentTimeString.value = formatCurrentTime()
                     } else
-                        payError.value = false
+                        payError.value = true
                     loading.value = false
                     networkError.value = false
                 }, { ex ->

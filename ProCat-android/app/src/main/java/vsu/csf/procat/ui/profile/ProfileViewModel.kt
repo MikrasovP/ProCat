@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
+import vsu.csf.procat.model.CurrentRentInventoryDto
+import vsu.csf.procat.repo.RentRepo
 import vsu.csf.procat.utils.AuthHolderImpl
 import java.util.*
 import javax.inject.Inject
@@ -14,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val authHolderImpl: AuthHolderImpl,
+    private val rentRepo: RentRepo,
 ) : ViewModel() {
 
     val isAuthorized = MutableLiveData(false)
@@ -28,8 +31,32 @@ class ProfileViewModel @Inject constructor(
         addSource(isAuthorized) { value = authHolderImpl.userEmail }
     }
 
+    val currentRentInventoryList = MutableLiveData(listOf<CurrentRentInventoryDto>())
+    val loading = MutableLiveData(false)
+    val networkError = MutableLiveData(false)
+
     fun updateAuthStatus() {
         isAuthorized.value = authHolderImpl.authToken.isNotBlank()
+        updateCurrentRentList()
+    }
+
+    private fun updateCurrentRentList() {
+        if (isAuthorized.value == false) {
+            currentRentInventoryList.value = listOf()
+            return
+        }
+        loading.value = true
+        rentRepo.getCurrentRentItems()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ items ->
+                currentRentInventoryList.value = items
+                loading.value = false
+                networkError.value = false
+            }, { ex ->
+                loading.value = false
+                networkError.value = true
+                Timber.e(ex, "Error while retrieving current rent list")
+            })
     }
 
     fun logout() {
