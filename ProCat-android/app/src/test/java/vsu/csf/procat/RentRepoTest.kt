@@ -12,12 +12,14 @@ import retrofit2.Response
 import vsu.csf.network.api.RentApi
 import vsu.csf.network.model.rent.RentStopModel
 import vsu.csf.procat.model.toDto
+import vsu.csf.procat.repo.DictionariesRepo
 import vsu.csf.procat.repo.RentRepoImpl
 import java.math.BigDecimal
 
 class RentRepoTest {
 
     private lateinit var rentRepoImpl: RentRepoImpl
+    private val dictionariesRepo = mockk<DictionariesRepo> {}
 
     @Test
     fun testRentStart() {
@@ -25,7 +27,8 @@ class RentRepoTest {
         val rentApi = mockk<RentApi> {
             every { startRent(any()) } returns Completable.complete()
         }
-        rentRepoImpl = RentRepoImpl(rentApi)
+
+        rentRepoImpl = RentRepoImpl(rentApi, dictionariesRepo)
         // Trigger:
         rentRepoImpl.startRent(ITEM_UUID)
             .test()
@@ -40,7 +43,7 @@ class RentRepoTest {
         val rentApi = mockk<RentApi> {
             every { stopRent(any()) } returns Single.just(RENT_STOP_MODEL)
         }
-        rentRepoImpl = RentRepoImpl(rentApi)
+        rentRepoImpl = RentRepoImpl(rentApi, dictionariesRepo)
         // Trigger:
         rentRepoImpl.pauseRent(ITEM_UUID)
             .test()
@@ -55,7 +58,7 @@ class RentRepoTest {
         val rentApi = mockk<RentApi> {
             every { payForRent(any()) } returns Completable.complete()
         }
-        rentRepoImpl = RentRepoImpl(rentApi)
+        rentRepoImpl = RentRepoImpl(rentApi, dictionariesRepo)
         // Trigger:
         rentRepoImpl.payForRent(RENT_ID)
             .test()
@@ -77,7 +80,7 @@ class RentRepoTest {
                 )
             )
         }
-        rentRepoImpl = RentRepoImpl(rentApi)
+        rentRepoImpl = RentRepoImpl(rentApi, dictionariesRepo)
         // Trigger:
         rentRepoImpl.payForRent(RENT_ID)
             .test()
@@ -99,7 +102,7 @@ class RentRepoTest {
                 )
             )
         }
-        rentRepoImpl = RentRepoImpl(rentApi)
+        rentRepoImpl = RentRepoImpl(rentApi, dictionariesRepo)
         // Trigger:
         rentRepoImpl.payForRent(RENT_ID)
             .test()

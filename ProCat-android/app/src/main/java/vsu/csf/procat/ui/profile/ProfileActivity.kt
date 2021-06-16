@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -23,8 +24,8 @@ import vsu.csf.procat.ui.scanner.ScannerActivity
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
-
     private val viewModel: ProfileViewModel by viewModels()
+    private val adapter = CurrentRentInventoryListAdapter { onCurrentRentItemClicked() }
 
     private var isMenuVisible = false
 
@@ -37,6 +38,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.activity = this
         binding.lifecycleOwner = this
         binding.vm = viewModel
+        binding.rentItemsRv.adapter = adapter
 
         setSupportActionBar(binding.profileToolbar)
 
@@ -52,6 +54,9 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.isAuthorized.observe(this) { isAuthorized ->
             isMenuVisible = isAuthorized
             invalidateOptionsMenu()
+        }
+        viewModel.currentRentInventoryList.observe(this) { items ->
+            adapter.setItems(items)
         }
     }
 
@@ -80,6 +85,10 @@ class ProfileActivity : AppCompatActivity() {
 
     fun onScanButtonClick() {
         ScannerActivity.startForResult(this, resultLauncher)
+    }
+
+    private fun onCurrentRentItemClicked() {
+        Toast.makeText(applicationContext, R.string.rent_item_finish_hint, Toast.LENGTH_SHORT).show()
     }
 
     private fun onUuidScanned(uuid: String) {
