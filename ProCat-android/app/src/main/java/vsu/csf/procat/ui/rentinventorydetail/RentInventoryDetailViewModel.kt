@@ -66,7 +66,6 @@ class RentInventoryDetailViewModel @Inject constructor(
         rentStarted.value = false
         rentStopped.value = null
         authRequest.value = false
-        retrieveItemData()
     }
 
     fun retrieveItemData() {
@@ -89,12 +88,13 @@ class RentInventoryDetailViewModel @Inject constructor(
             }, { ex ->
                 Timber.e(ex, "Error while retrieving item data, id: $itemUuid")
                 error.value = true
+                dataLoaded.value = false
                 loading.value = false
             })
     }
 
     fun startRent() {
-        if (authHolderImpl.isAuthorized()){
+        if (authHolderImpl.isAuthorized()) {
             authRequest.value = false
             rentStartLoading.value = true
             rentRepo.startRent(itemUuid)
@@ -106,6 +106,7 @@ class RentInventoryDetailViewModel @Inject constructor(
                 }, { ex ->
                     Timber.e(ex, "Error while starting rent, uuid: $itemUuid")
                     error.value = true
+                    dataLoaded.value = false
                     rentStartLoading.value = false
                 })
         } else {
@@ -115,18 +116,22 @@ class RentInventoryDetailViewModel @Inject constructor(
 
 
     fun stopRent() {
-        rentStopLoading.value = true
-        rentRepo.pauseRent(itemUuid)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                rentStopped.value = it
-                rentStopLoading.value = false
-                error.value = false
-            }, { ex ->
-                Timber.e(ex, "Error while pausing rent, uuid: $itemUuid")
-                error.value = true
-                rentStopLoading.value = false
-            })
+        if (authHolderImpl.isAuthorized()) {
+            rentStopLoading.value = true
+            rentRepo.pauseRent(itemUuid)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    rentStopped.value = it
+                    rentStopLoading.value = false
+                    error.value = false
+                }, { ex ->
+                    Timber.e(ex, "Error while pausing rent, uuid: $itemUuid")
+                    error.value = true
+                    rentStopLoading.value = false
+                })
+        } else {
+            authRequest.value = true
+        }
     }
 
     private fun setUpItemData(rentInventory: RentInventory) {
