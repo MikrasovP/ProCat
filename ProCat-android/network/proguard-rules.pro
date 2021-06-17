@@ -20,7 +20,10 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
- -dontnote com.google.gson.annotations.Expose
+    -keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+    -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+
+    -dontnote com.google.gson.annotations.Expose
     -keepclassmembers class * {
         @com.google.gson.annotations.Expose <fields>;
     }
