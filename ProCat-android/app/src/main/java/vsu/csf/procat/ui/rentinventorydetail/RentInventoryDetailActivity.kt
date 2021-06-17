@@ -58,6 +58,11 @@ class RentInventoryDetailActivity : AppCompatActivity() {
         observeViewModelEvents()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.retrieveItemData()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_profile_toolbar, menu)
         return true
