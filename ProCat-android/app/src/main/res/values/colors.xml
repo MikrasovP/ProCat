@@ -12,8 +12,8 @@
 
     <color name="background_primary">#f8ffff</color>
     <color name="background_dark">#b6f6f1</color>
-    <color name="accent_teal">#41aea9</color>
-    <color name="accent_orange">#ffb037</color>
+    <color name="primary_dark_blue">#050533</color>
+    <color name="accent_orange">#FAAF55</color>
     <color name="font">#213e3b</color>
     <color name="font_light">#EEEDE7</color>
 </resources>

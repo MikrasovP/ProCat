@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
-                android:backgroundTint="@color/accent_teal"
+                android:backgroundTint="@color/primary_dark_blue"
                 android:onClick="@{() -> vm.stopRent()}"
                 android:text="@string/finish_rent"
                 android:visibility="@{vm.finishRentButtonVisible ? View.VISIBLE : View.GONE}"
@@ -151,7 +151,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            app:indicatorColor="@color/accent_teal"
+            app:indicatorColor="@color/primary_dark_blue"
             android:visibility="@{vm.rentStatusLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/rent_inventory_detail_toolbar" />
 
