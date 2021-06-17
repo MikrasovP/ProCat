@@ -4,6 +4,10 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
@@ -82,6 +86,7 @@ class RentInventoryDetailViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ rentInventory ->
                 setUpItemData(rentInventory)
+                logItemScanned(rentInventory)
                 error.value = false
                 dataLoaded.value = true
                 loading.value = false
@@ -103,6 +108,7 @@ class RentInventoryDetailViewModel @Inject constructor(
                     rentStarted.value = true
                     rentStartLoading.value = false
                     error.value = false
+                    logStartRent()
                 }, { ex ->
                     Timber.e(ex, "Error while starting rent, uuid: $itemUuid")
                     error.value = true
@@ -124,6 +130,7 @@ class RentInventoryDetailViewModel @Inject constructor(
                     rentStopped.value = it
                     rentStopLoading.value = false
                     error.value = false
+                    logStopRent()
                 }, { ex ->
                     Timber.e(ex, "Error while pausing rent, uuid: $itemUuid")
                     error.value = true
@@ -131,6 +138,32 @@ class RentInventoryDetailViewModel @Inject constructor(
                 })
         } else {
             authRequest.value = true
+        }
+    }
+
+    private fun logItemScanned(rentInventory: RentInventory) {
+        val eventName = if (rentStatus.value!! == 2L)
+            SCAN_CODE_SECONDARY_EVENT
+        else
+            SCAN_CODE_FIRSTLY_EVENT
+        Firebase.analytics.logEvent(eventName) {
+            param(FirebaseAnalytics.Param.ITEM_ID, rentInventory.uuid)
+            param(FirebaseAnalytics.Param.ITEM_CATEGORY, rentInventory.typeName)
+            param(FirebaseAnalytics.Param.ITEM_NAME, rentInventory.name)
+        }
+    }
+
+    private fun logStartRent() {
+        Firebase.analytics.logEvent(START_RENT_EVENT) {
+            param(FirebaseAnalytics.Param.ITEM_CATEGORY, typeName.value!!)
+            param(FirebaseAnalytics.Param.ITEM_NAME, name.value!!)
+        }
+    }
+
+    private fun logStopRent() {
+        Firebase.analytics.logEvent(STOP_RENT_EVENT) {
+            param(FirebaseAnalytics.Param.ITEM_CATEGORY, typeName.value!!)
+            param(FirebaseAnalytics.Param.ITEM_NAME, name.value!!)
         }
     }
 
@@ -148,6 +181,11 @@ class RentInventoryDetailViewModel @Inject constructor(
         private const val STATUS_AVAILABLE = 1L
         private const val STATUS_IN_RENT = 2L
         private const val STATUS_UNAVAILABLE = 3L
+
+        private const val SCAN_CODE_FIRSTLY_EVENT = "scan_code_firstly"
+        private const val SCAN_CODE_SECONDARY_EVENT = "scan_code_secondary"
+        private const val START_RENT_EVENT = "start_rent"
+        private const val STOP_RENT_EVENT = "stop_rent"
     }
 
 }
