@@ -12,6 +12,10 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import vsu.csf.procat.R
@@ -87,6 +91,10 @@ class RentStationsListActivity : AppCompatActivity() {
 
     private fun onRentStationClick(rentStation: RentStation) {
         RentInventoryListActivity.start(this, rentStation.id)
+        Firebase.analytics.logEvent("station_items_view") {
+            param(FirebaseAnalytics.Param.ITEM_ID, rentStation.id)
+            param(FirebaseAnalytics.Param.ITEM_NAME, rentStation.name)
+        }
     }
 
     companion object {

@@ -1,6 +1,8 @@
 package vsu.csf.procat.utils
 
 import android.util.Log
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import timber.log.Timber
 
 class CrashReportTree : Timber.Tree() {
@@ -10,10 +12,10 @@ class CrashReportTree : Timber.Tree() {
     }
 
     override fun log(priority: Int, tag: String?, message: String, throwable: Throwable?) {
-        /*Analytics.trackEvent(message)
+        Firebase.crashlytics.log(message)
         if (priority == Log.ERROR) {
-            Crashes.trackError(throwable ?: UnknownException(message))
-        }*/
+            Firebase.crashlytics.recordException(throwable ?: UnknownException(message))
+        }
     }
 
     private class UnknownException(message: String) : RuntimeException(message)

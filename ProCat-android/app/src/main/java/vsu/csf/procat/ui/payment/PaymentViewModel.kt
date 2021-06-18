@@ -5,6 +5,10 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import timber.log.Timber
@@ -69,6 +73,7 @@ class PaymentViewModel @Inject constructor(
                     if (success) {
                         paySuccess.value = true
                         paymentTimeString.value = formatCurrentTime()
+                        triggerPurchaseEvent()
                     } else
                         payError.value = true
                     loading.value = false
@@ -82,6 +87,14 @@ class PaymentViewModel @Inject constructor(
                     networkError.value = true
                 })
         } ?: Timber.e("Attempt to pay while rentId is null")
+    }
+
+    private fun triggerPurchaseEvent() {
+        val analytics = Firebase.analytics
+        analytics.logEvent(FirebaseAnalytics.Event.PURCHASE) {
+            param(FirebaseAnalytics.Param.ITEM_ID, rentId.value!!)
+            param(FirebaseAnalytics.Param.PRICE, payAmountString.value!!)
+        }
     }
 
     private fun getPayAmountString(payAmount: BigDecimal): String =
